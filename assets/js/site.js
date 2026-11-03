@@ -174,6 +174,87 @@
      Reveal on scroll
      ------------------------------------------------------------------------ */
 
+  /* ------------------------------------------------------------------------
+     Custom cursor + magnetic hover + hero parallax
+     ------------------------------------------------------------------------ */
+
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  if (finePointer && !reduceMotion) {
+    var cursorEl = document.createElement("div");
+    cursorEl.className = "cursor";
+    cursorEl.setAttribute("aria-hidden", "true");
+    var cursorDot = document.createElement("div");
+    cursorDot.className = "cursor__dot";
+    cursorDot.setAttribute("aria-hidden", "true");
+    document.body.appendChild(cursorEl);
+    document.body.appendChild(cursorDot);
+
+    if (cursorEl && cursorDot) {
+      document.documentElement.classList.add("has-cursor");
+
+      var cpos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      var cring = { x: cpos.x, y: cpos.y };
+      var craf = 0;
+
+      function cursorTick() {
+        cring.x += (cpos.x - cring.x) * 0.16;
+        cring.y += (cpos.y - cring.y) * 0.16;
+        cursorEl.style.left = cring.x + "px";
+        cursorEl.style.top = cring.y + "px";
+        cursorDot.style.left = (cring.x - 3) + "px";
+        cursorDot.style.top = (cring.y - 3) + "px";
+        craf = window.requestAnimationFrame(cursorTick);
+      }
+      craf = window.requestAnimationFrame(cursorTick);
+
+      document.addEventListener("mousemove", function (e) {
+        cpos.x = e.clientX;
+        cpos.y = e.clientY;
+      }, { passive: true });
+
+      var HOVER_SELECTOR = "a[href], button, input, textarea, select, label, [data-cursor]";
+      function syncHover(target) {
+        var hoverable = target && target.closest ? target.closest(HOVER_SELECTOR) : null;
+        document.body.classList.toggle("cursor-hover", !!hoverable);
+      }
+      document.addEventListener("mouseover", function (e) { syncHover(e.target); });
+      document.addEventListener("mouseout", function (e) {
+        if (e.relatedTarget) return;
+        document.body.classList.remove("cursor-hover");
+      });
+
+      var hero = document.querySelector(".hero");
+      if (hero) {
+        document.addEventListener("mousemove", function (e) {
+          var r = hero.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5;
+          var y = (e.clientY - r.top) / r.height - 0.5;
+          hero.style.setProperty("--px", (x * -22) + "px");
+          hero.style.setProperty("--py", (y * -16) + "px");
+        }, { passive: true });
+      }
+    }
+  }
+
+  var MAGNET_SELECTORS = ".btn, .head__apply, .menu__nav a, .next-card, .aud-card, .tlink, .band .tlink, .foot__links a";
+  if (!reduceMotion) {
+    var magneticEls = document.querySelectorAll(MAGNET_SELECTORS);
+    Array.prototype.forEach.call(magneticEls, function (el) {
+      el.addEventListener("mousemove", function (e) {
+        var r = el.getBoundingClientRect();
+        var dx = e.clientX - (r.left + r.width * 0.5);
+        var dy = e.clientY - (r.top + r.height * 0.5);
+        el.style.transform = "translate(" + (dx * 0.22).toFixed(1) + "px," + (dy * 0.22).toFixed(1) + "px)";
+      });
+      el.addEventListener("mouseleave", function () { el.style.transform = ""; });
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     Reveal on scroll
+     ------------------------------------------------------------------------ */
+
   var revealItems = $$("[data-reveal]");
   if (!reduceMotion && "IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (entries) {

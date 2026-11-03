@@ -45,6 +45,8 @@ dependency for navigation, and no build step.
 - The city switcher is keyboard accessible (arrow keys, Home, End).
 - The process section updates its step counter as you scroll.
 - Live IST clock in the footer.
+- Custom cursor (dot + trailing ring) with hover-grow on interactive elements, hidden on touch/reduced-motion.
+- Magnetic hover on buttons and key cards, plus cursor-tracked parallax on the hero title.
 - Everything respects `prefers-reduced-motion`.
 - Print / no-JS still reads: reveal animations only apply once `html.js` is set.
 
