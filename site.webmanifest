@@ -4,8 +4,8 @@
   "description": "Reality Check \u2014 a three-city series by noClue. Delhi, Bangalore, Pune.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a09",
-  "theme_color": "#0a0a09",
+  "background_color": "#f4f1e7",
+  "theme_color": "#f4f1e7",
   "icons": [
     {
       "src": "icon-192.png",

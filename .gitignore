@@ -1,14 +1,3 @@
-# OS / editor
+incoming/
 .DS_Store
-Thumbs.db
-*.swp
-.idea/
-.vscode/
-
-# Python (serve.py, tools/gen_assets.py)
-__pycache__/
-*.py[cod]
-.venv/
-
-# Local test artifacts
-.tmp-jsdom/
+*.log

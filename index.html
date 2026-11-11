@@ -6,7 +6,7 @@
 <title>Reality Check — a three-city series by noClue</title>
 <meta name="description" content="Reality Check is a three-city series by noClue. Delhi, Bangalore, and Pune. For the people who have to make AI work after the demo ends.">
 <link rel="canonical" href="https://noclue.co/">
-<meta name="theme-color" content="#0a0a09">
+<meta name="theme-color" content="#f4f1e7">
 <meta name="apple-mobile-web-app-title" content="noClue">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="noClue">
@@ -18,13 +18,13 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Reality Check — a three-city series by noClue">
-<meta name="twitter:description" content="Delhi. Bangalore. Pune. Less demo. More consequence.">
+<meta name="twitter:description" content="Delhi. Bangalore. Pune. Less talk. More build.">
 <meta name="twitter:image" content="https://noclue.co/assets/img/og.jpg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="preload" href="assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/campaign.css">
 <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -34,9 +34,16 @@
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 
+<div class="utility">
+  <div class="wrap utility__in">
+    <span class="utility__side">Reality Check / 2026</span>
+    <span class="utility__mid">Less talk. More build.</span>
+    <span class="utility__side utility__side--r">Real people. Real progress.</span>
+  </div>
+</div>
 <header class="head" id="head">
   <div class="wrap head__in">
-    <a class="brand" href="index.html" aria-label="noClue home">noClue<span class="brand__dot" aria-hidden="true"></span></a>
+    <a class="brand" href="index.html" aria-label="noClue home"><img src="assets/img/brand/noclue-black.png" alt="noClue"></a>
 
     <nav class="nav" aria-label="Primary">
       <a href="#premise">The premise</a>
@@ -46,7 +53,7 @@
     </nav>
 
     <div class="head__actions">
-      <a class="btn btn--lime btn--sm" href="#cities">Apply</a>
+      <a class="btn btn--blue btn--sm" href="#cities">Apply</a>
       <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
         <span></span><span></span>
       </button>
@@ -72,70 +79,41 @@
 
   <!-- Hero -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero__grid" aria-hidden="true"></div>
     <div class="wrap hero__in">
-
-      <div class="hero__meta">
-        <span><b>No. 002</b> / The series</span>
-        <span class="hero__meta-r"><i class="hero__meta-dot" aria-hidden="true"></i> Reality Check / 03 cities</span>
-      </div>
-
-      <div class="hero__stage">
-        <span class="hero__ghost" aria-hidden="true">03</span>
+      <div class="hero__main">
+        <div class="hero__meta">
+          <span><b>01</b> / A noClue series</span>
+          <span>November 2026 · Delhi · Bangalore · Pune</span>
+        </div>
         <h1 class="hero__title" id="hero-title">
-          <span class="hero__line"><span>Reality</span></span>
-          <span class="hero__line"><span>Check<i class="hero__mark" aria-hidden="true"></i></span></span>
+          <img src="assets/img/brand/reality-check-title.png" width="792" height="441" alt="Reality Check — less talk, more build">
         </h1>
-        <p class="hero__serif">A three-city series <em>by noClue.</em></p>
-        <p class="hero__lede">For the people who have to make AI work after the demo ends. Delhi, Bangalore, Pune.</p>
-      </div>
-
-      <div class="hero__foot">
-        <a class="btn btn--lime" href="#cities">
-          <span>Choose your city</span>
-          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.5"/></svg>
-        </a>
-        <a class="tlink" href="partners.html">Partner with us</a>
-        <p class="hero__note"><b>Registration open</b><br>Dates announced city by city</p>
-      </div>
-
-      <div class="city-index">
-        <div class="city-index__head"><span>The series / 2026</span><span>03 cities</span></div>
-
-        <div class="city-row" data-city="delhi">
-          <a class="city-row__hit" href="programs.html#delhi" aria-label="Read about Reality Check Delhi"></a>
-          <span class="city-row__no">01</span>
-          <span class="city-row__city">Delhi</span>
-          <span class="city-row__theme">Pilot to Product</span>
-          <a class="city-row__apply" href="https://www.commudle.com/communities/noclue/events/reality-check-delhi-edition" target="_blank" rel="noopener">Apply</a>
-        </div>
-
-        <div class="city-row" data-city="bangalore">
-          <a class="city-row__hit" href="programs.html#bangalore" aria-label="Read about Reality Check Bangalore"></a>
-          <span class="city-row__no">02</span>
-          <span class="city-row__city">Bangalore</span>
-          <span class="city-row__theme">Shipped Live</span>
-          <a class="city-row__apply" href="https://share.goavo.ai/og/event?id=6acf13dc2c0656d24c945c9a&amp;utm_source=share&amp;utm_content=6acf13dc2c0656d24c945c9a&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">Apply</a>
-        </div>
-
-        <div class="city-row" data-city="pune">
-          <a class="city-row__hit" href="programs.html#pune" aria-label="Read about Reality Check Pune"></a>
-          <span class="city-row__no">03</span>
-          <span class="city-row__city">Pune</span>
-          <span class="city-row__theme">Breaking Point</span>
-          <a class="city-row__apply" href="https://share.goavo.ai/og/event?id=6acf2b802c0656d24c945ca0&amp;utm_source=share&amp;utm_content=6acf2b802c0656d24c945ca0&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">Apply</a>
+        <p class="hero__lede">Three cities. Three realities. One room where the work has to survive contact with it — <b>not just the demo.</b></p>
+        <div class="hero__foot">
+          <a class="btn btn--blue" href="#cities">
+            <span>Choose your city</span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+          </a>
+          <a class="tlink" href="partners.html">Partner with us</a>
+          <p class="hero__note"><b>Registration open</b><br>Dates announced city by city</p>
         </div>
       </div>
 
+      <aside class="hero__aside" aria-label="The three cities">
+        <span class="hero__aside-label">The series / 2026</span>
+        <p class="hero__badge">03<span>Cities / one standard</span></p>
+        <ul class="hero__cities">
+          <li><span>01</span><a href="programs.html#delhi"><b>Delhi</b></a><em>Pilot to Product</em></li>
+          <li><span>02</span><a href="programs.html#bangalore"><b>Bangalore</b></a><em>Shipped Live</em></li>
+          <li><span>03</span><a href="programs.html#pune"><b>Pune</b></a><em>Breaking Point</em></li>
+        </ul>
+        <a class="hero__aside-link" href="#cities"><span>See the three rooms</span><span aria-hidden="true">↘</span></a>
+      </aside>
+    </div>
+    <div class="hero__skyline" aria-hidden="true">
+      <img src="assets/img/brand/skyline.jpg" width="1650" height="390" alt="" loading="eager">
     </div>
   </section>
-
-  <div class="city-preview" id="cityPreview" aria-hidden="true">
-    <img alt="" data-preview="delhi" data-src="assets/img/cities/delhi.png">
-    <img alt="" data-preview="bangalore" data-src="assets/img/cities/bangalore.png">
-    <img alt="" data-preview="pune" data-src="assets/img/cities/pune.png">
-    <span class="city-preview__tag" id="cityPreviewTag">Delhi / 01</span>
-  </div>
 
   <div class="ticker" aria-hidden="true">
     <div class="ticker__track">
@@ -144,8 +122,8 @@
         <span class="ticker__item">Delhi — Pilot to Product</span>
         <span class="ticker__item">Bangalore — Shipped Live</span>
         <span class="ticker__item">Pune — Breaking Point</span>
-        <span class="ticker__item">Less demo</span>
-        <span class="ticker__item">More consequence</span>
+        <span class="ticker__item">Less talk. More build.</span>
+        <span class="ticker__item">Real people. Real progress.</span>
         <span class="ticker__item">A noClue series</span>
       </div>
       <div class="ticker__group">
@@ -153,8 +131,8 @@
         <span class="ticker__item">Delhi — Pilot to Product</span>
         <span class="ticker__item">Bangalore — Shipped Live</span>
         <span class="ticker__item">Pune — Breaking Point</span>
-        <span class="ticker__item">Less demo</span>
-        <span class="ticker__item">More consequence</span>
+        <span class="ticker__item">Less talk. More build.</span>
+        <span class="ticker__item">Real people. Real progress.</span>
         <span class="ticker__item">A noClue series</span>
       </div>
     </div>
@@ -218,7 +196,7 @@
 
         <a class="poster" href="https://www.commudle.com/communities/noclue/events/reality-check-delhi-edition" target="_blank" rel="noopener" data-reveal>
           <div class="poster__media">
-            <img src="assets/img/cities/delhi.png" alt="Reality Check Delhi poster — Pilot to Product" loading="lazy">
+            <img src="assets/img/cities/delhi.jpg" width="1200" height="1200" alt="Reality Check Delhi poster — Pilot to Product">
           </div>
           <div class="poster__body">
             <div class="poster__city"><span>Delhi</span><span>01</span></div>
@@ -232,7 +210,7 @@
 
         <a class="poster" href="https://share.goavo.ai/og/event?id=6acf13dc2c0656d24c945c9a&amp;utm_source=share&amp;utm_content=6acf13dc2c0656d24c945c9a&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener" data-reveal style="--d:.08s">
           <div class="poster__media">
-            <img src="assets/img/cities/bangalore.png" alt="Reality Check Bangalore poster — Shipped Live" loading="lazy">
+            <img src="assets/img/cities/bangalore.jpg" width="1200" height="1200" alt="Reality Check Bangalore poster — Shipped Live">
           </div>
           <div class="poster__body">
             <div class="poster__city"><span>Bangalore</span><span>02</span></div>
@@ -246,7 +224,7 @@
 
         <a class="poster" href="https://share.goavo.ai/og/event?id=6acf2b802c0656d24c945ca0&amp;utm_source=share&amp;utm_content=6acf2b802c0656d24c945ca0&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener" data-reveal style="--d:.16s">
           <div class="poster__media">
-            <img src="assets/img/cities/pune.png" alt="Reality Check Pune poster — Breaking Point" loading="lazy">
+            <img src="assets/img/cities/pune.jpg" width="1200" height="1200" alt="Reality Check Pune poster — Breaking Point">
           </div>
           <div class="poster__body">
             <div class="poster__city"><span>Pune</span><span>03</span></div>
@@ -315,44 +293,42 @@
       </div>
 
       <div class="partner-wall">
-
         <div class="partner-tier partner-tier--series">
           <span class="partner-tier__label">Series partner</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo partner-logo--series">TinyFish<span class="partner-logo__dot"></span></span>
+            <span class="partner-logo partner-logo--tinyfish"><img src="assets/img/partners/tinyfish.png" alt="TinyFish" loading="lazy" decoding="async"></span>
           </div>
         </div>
 
         <div class="partner-tier">
           <span class="partner-tier__label">Platform partner</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo partner-logo--serif">GoAvo<span class="partner-logo__dot"></span></span>
+            <span class="partner-logo partner-logo--goavo"><img src="assets/img/partners/goavo.svg" alt="GoAvo" loading="lazy" decoding="async"></span>
           </div>
         </div>
 
         <div class="partner-tier">
           <span class="partner-tier__label">Ecosystem partners</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo partner-logo--light">Google <span style="font-weight:700">for Developers</span></span>
-            <span class="partner-logo partner-logo--mono">Paytm<span class="partner-logo__dot partner-logo__dot--blue"></span></span>
+            <span class="partner-logo partner-logo--google"><img src="assets/img/partners/google-for-developers.svg" alt="Google for Developers" loading="lazy" decoding="async"></span>
+            <span class="partner-logo partner-logo--paytm"><img src="assets/img/partners/paytm.png" alt="Paytm AI" loading="lazy" decoding="async"></span>
           </div>
         </div>
 
         <div class="partner-tier">
           <span class="partner-tier__label">Community partner</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo">DevRel<span class="partner-logo__dot"></span></span>
+            <span class="partner-logo partner-logo--devrel"><img src="assets/img/partners/devrel-squad.svg" alt="DevRel Squad" loading="lazy" decoding="async"></span>
           </div>
         </div>
 
         <div class="partner-tier">
           <span class="partner-tier__label">City partners</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo partner-logo--wide">Neo4j<span class="partner-logo__dot partner-logo__dot--green"></span> <small class="mono" style="font-size:.3em;letter-spacing:.12em;font-weight:500">Delhi</small></span>
-            <span class="partner-logo partner-logo--wide">Rezoomex<span class="partner-logo__dot"></span> <small class="mono" style="font-size:.3em;letter-spacing:.12em;font-weight:500">Pune</small></span>
+            <span class="partner-logo partner-logo--neo4j"><img src="assets/img/partners/neo4j.svg" alt="Neo4j" loading="lazy" decoding="async"><small>Delhi</small></span>
+            <span class="partner-logo partner-logo--rezoomex"><img src="assets/img/partners/rezoomex.png" alt="Rezoomex" loading="lazy" decoding="async"><small>Pune</small></span>
           </div>
         </div>
-
       </div>
 
       <div class="partners__cta">
@@ -369,8 +345,8 @@
   <section class="quote">
     <span class="quote__ghost" aria-hidden="true">03</span>
     <div class="wrap quote__in">
-      <p class="section__label">The operating principle</p>
-      <h2 class="quote__text">Less demo.<span class="serif">More consequence.</span></h2>
+      <p class="section__label">The standard</p>
+      <h2 class="quote__text">Less talk.<span class="serif">More build.</span></h2>
       <div class="quote__foot">
         <span class="quote__by">noClue / Reality Check</span>
         <a class="tlink" href="manifesto.html">Read the manifesto</a>
@@ -458,7 +434,7 @@
       <div class="wrap">
         <div class="foot__top">
           <div>
-            <p class="foot__brand">noClue<span>.</span></p>
+            <a class="foot__brand" href="index.html" aria-label="noClue home"><img src="assets/img/brand/noclue-black.png" alt="noClue"></a>
             <p class="foot__tag">A network for the people who have to make AI work in the real world.</p>
           </div>
           <div class="foot__col">
