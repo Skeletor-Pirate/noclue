@@ -26,13 +26,20 @@
 <link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/campaign.css">
+<link rel="stylesheet" href="assets/css/motion.css">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
-<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+<div class="wipe" id="wipe" aria-hidden="true"></div>
+<div class="pxfield" id="pxfield" aria-hidden="true"><canvas></canvas></div>
+<div class="scrollbar" id="scrollbar" aria-hidden="true"><span></span></div>
+<button class="totop" id="toTop" type="button" aria-label="Back to top" aria-hidden="true">&#8593;</button>
+
 
 <div class="utility">
   <div class="wrap utility__in">
@@ -98,7 +105,7 @@
       <header class="sec-head">
         <div>
           <p class="section__label">01 / The series</p>
-          <h2 class="h2">One series.<br><span class="serif">Three different pressures.</span></h2>
+          <h2 class="h2" data-split>One series.<br><span class="serif">Three different pressures.</span></h2>
         </div>
         <p class="sec-head__lede">A demo is not a deployment. A pilot is not a product. The gap between the two is where most enterprise AI quietly dies — in data pipelines, security reviews, procurement, and the small matter of making the thing useful on a Tuesday.</p>
       </header>
@@ -110,9 +117,9 @@
         </div>
         <div class="city-detail__body">
           <p class="section__label">01 / Delhi</p>
-          <h2 class="city-detail__city">Delhi</h2>
+          <h2 class="city-detail__city" data-split>Delhi</h2>
           <p class="city-detail__theme">Pilot to Product</p>
-          <p class="city-detail__lede">Most enterprise AI doesn't fail in the demo. It dies in the pilot.</p>
+          <p class="city-detail__lede" data-split>Most enterprise AI doesn't fail in the demo. It dies in the pilot.</p>
           <p class="city-detail__copy">A day on the unglamorous middle: data that isn't clean, security that won't budge, procurement that takes months, and a business case that has to survive contact with finance. For the people who have to make AI work inside a real company — not just announce it.</p>
           <dl class="city-detail__facts">
             <div><dt>Focus</dt><dd>Enterprise AI, commercial</dd></div>
@@ -137,9 +144,9 @@
         </div>
         <div class="city-detail__body">
           <p class="section__label">02 / Bangalore</p>
-          <h2 class="city-detail__city">Bangalore</h2>
+          <h2 class="city-detail__city" data-split>Bangalore</h2>
           <p class="city-detail__theme">Shipped Live</p>
-          <p class="city-detail__lede">One product. One day. Built across the tools in the room.</p>
+          <p class="city-detail__lede" data-split>One product. One day. Built across the tools in the room.</p>
           <p class="city-detail__copy">A workshop-led build day. Teams work across multiple partner tools to ship one working product, ending in a live Ship and Show. No imaginary architecture. No “we'll integrate it later.” You leave with something that runs — and with the people you built it with.</p>
           <dl class="city-detail__facts">
             <div><dt>Focus</dt><dd>Hands-on building</dd></div>
@@ -164,9 +171,9 @@
         </div>
         <div class="city-detail__body">
           <p class="section__label">03 / Pune</p>
-          <h2 class="city-detail__city">Pune</h2>
+          <h2 class="city-detail__city" data-split>Pune</h2>
           <p class="city-detail__theme">Breaking Point</p>
-          <p class="city-detail__lede">What breaks when the thing starts working?</p>
+          <p class="city-detail__lede" data-split>What breaks when the thing starts working?</p>
           <p class="city-detail__copy">A Build vs. Scale session on where technology ends and scale bottlenecks begin. Cost, latency, evaluation, support, trust, and the organisational seams that show up the moment something real starts working. Bring the thing that's straining. Leave with a map of why.</p>
           <dl class="city-detail__facts">
             <div><dt>Focus</dt><dd>Scaling AI systems</dd></div>
@@ -189,7 +196,7 @@
   <section class="section section--bone section--tight">
     <div class="wrap">
       <div class="band__in">
-        <p class="band__text">Have you built something and learned something <span class="serif">the hard way?</span></p>
+        <p class="band__text" data-split>Have you built something and learned something <span class="serif">the hard way?</span></p>
         <a class="btn btn--ink" href="mailto:hello@noclue.co?subject=Reality%20Check%20talk%20submission">
           <span>Submit a talk</span>
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -202,19 +209,19 @@
     <span class="finale__ghost" aria-hidden="true">03</span>
     <div class="wrap finale__in">
       <p class="section__label">Registration open</p>
-      <h2 class="finale__title">Pick your<span class="serif">city.</span></h2>
+      <h2 class="finale__title" data-split>Pick your<span class="serif">city.</span></h2>
       <div class="finale__sub">
         <p>No two cities run the same show. Choose the room that matches what you're building — or what you're trying to fix.</p>
         <a class="tlink" href="mailto:hello@noclue.co?subject=Reality%20Check%20—%20which%20city%3F">Not sure? Ask us</a>
       </div>
       <div class="finale__cities">
-        <a class="finale__city" href="https://www.commudle.com/communities/noclue/events/reality-check-delhi-edition" target="_blank" rel="noopener">
+        <a class="finale__city" data-cursor="Apply" href="https://www.commudle.com/communities/noclue/events/reality-check-delhi-edition" target="_blank" rel="noopener">
           <span>01 / Delhi</span><strong>Delhi</strong><em>Pilot to Product</em>
         </a>
-        <a class="finale__city" href="https://share.goavo.ai/og/event?id=6acf13dc2c0656d24c945c9a&amp;utm_source=share&amp;utm_content=6acf13dc2c0656d24c945c9a&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">
+        <a class="finale__city" data-cursor="Apply" href="https://share.goavo.ai/og/event?id=6acf13dc2c0656d24c945c9a&amp;utm_source=share&amp;utm_content=6acf13dc2c0656d24c945c9a&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">
           <span>02 / Bangalore</span><strong>Bangalore</strong><em>Shipped Live</em>
         </a>
-        <a class="finale__city" href="https://share.goavo.ai/og/event?id=6acf2b802c0656d24c945ca0&amp;utm_source=share&amp;utm_content=6acf2b802c0656d24c945ca0&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">
+        <a class="finale__city" data-cursor="Apply" href="https://share.goavo.ai/og/event?id=6acf2b802c0656d24c945ca0&amp;utm_source=share&amp;utm_content=6acf2b802c0656d24c945ca0&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">
           <span>03 / Pune</span><strong>Pune</strong><em>Breaking Point</em>
         </a>
       </div>
@@ -245,6 +252,7 @@
           </div>
         </div>
         <div class="foot__bottom">
+          <button class="sound" id="soundToggle" type="button" aria-pressed="false"><i></i><span>Sound off</span></button>
           <span>© 2026 noClue. All rights reserved.</span>
           <span>Delhi · Bangalore · Pune</span>
           <a href="#top">Back to top ↑</a>
@@ -253,5 +261,6 @@
     </footer>
 
 <script src="assets/js/site.js" defer></script>
+<script src="assets/js/motion.js" defer></script>
 </body>
 </html>

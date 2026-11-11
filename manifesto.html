@@ -26,13 +26,20 @@
 <link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/campaign.css">
+<link rel="stylesheet" href="assets/css/motion.css">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
-<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+<div class="wipe" id="wipe" aria-hidden="true"></div>
+<div class="pxfield" id="pxfield" aria-hidden="true"><canvas></canvas></div>
+<div class="scrollbar" id="scrollbar" aria-hidden="true"><span></span></div>
+<button class="totop" id="toTop" type="button" aria-label="Back to top" aria-hidden="true">&#8593;</button>
+
 
 <div class="utility">
   <div class="wrap utility__in">
@@ -97,7 +104,7 @@
     <div class="wrap">
       <div class="manifesto">
         <p class="section__label">01 / The belief</p>
-        <h2 class="manifesto__lede">The future of AI won't be decided in a demo.<span class="serif">It'll be decided in the room where it has to work.</span></h2>
+        <h2 class="manifesto__lede" data-split>The future of AI won't be decided in a demo.<span class="serif">It'll be decided in the room where it has to work.</span></h2>
 
         <div class="manifesto__body">
           <p>Most AI conversations stop at what's possible. The harder, more useful conversation starts after that: what happens when the model meets a messy dataset, a security review, a sceptical operator, or a business that needs the thing to work on a Tuesday.</p>
@@ -138,7 +145,7 @@
     <span class="quote__ghost" aria-hidden="true">03</span>
     <div class="wrap quote__in">
       <p class="section__label">The short version</p>
-      <h2 class="quote__text">Real problems.<span class="serif">Real rooms.</span></h2>
+      <h2 class="quote__text" data-split>Real problems.<span class="serif">Real rooms.</span></h2>
       <div class="quote__foot">
         <span class="quote__by">noClue / Reality Check</span>
         <a class="tlink" href="programs.html">See the series</a>
@@ -149,7 +156,7 @@
   <section class="section section--bone section--tight">
     <div class="wrap">
       <div class="band__in">
-        <p class="band__text">If that sounds like your kind of room, <span class="serif">come build in it.</span></p>
+        <p class="band__text" data-split>If that sounds like your kind of room, <span class="serif">come build in it.</span></p>
         <a class="btn btn--ink" href="apply.html">
           <span>Apply for a city</span>
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -182,6 +189,7 @@
         </div>
       </div>
       <div class="foot__bottom">
+          <button class="sound" id="soundToggle" type="button" aria-pressed="false"><i></i><span>Sound off</span></button>
         <span>© 2026 noClue. All rights reserved.</span>
         <span>Delhi · Bangalore · Pune</span>
         <a href="#top">Back to top ↑</a>
@@ -190,5 +198,6 @@
   </footer>
 
 <script src="assets/js/site.js" defer></script>
+<script src="assets/js/motion.js" defer></script>
 </body>
 </html>

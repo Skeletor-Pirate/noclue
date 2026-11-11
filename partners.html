@@ -26,13 +26,20 @@
 <link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/campaign.css">
+<link rel="stylesheet" href="assets/css/motion.css">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
-<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+<div class="wipe" id="wipe" aria-hidden="true"></div>
+<div class="pxfield" id="pxfield" aria-hidden="true"><canvas></canvas></div>
+<div class="scrollbar" id="scrollbar" aria-hidden="true"><span></span></div>
+<button class="totop" id="toTop" type="button" aria-label="Back to top" aria-hidden="true">&#8593;</button>
+
 
 <div class="utility">
   <div class="wrap utility__in">
@@ -98,7 +105,7 @@
       <div class="partners__head">
         <div>
           <p class="section__label">01 / The wall</p>
-          <h2 class="h2">The people<br><span class="serif">in the room.</span></h2>
+          <h2 class="h2" data-split>The people<br><span class="serif">in the room.</span></h2>
         </div>
         <p class="partners__note">Series, platform, ecosystem, community, and city partners supporting the first Reality Check series.</p>
       </div>
@@ -108,37 +115,37 @@
         <div class="partner-tier partner-tier--series">
           <span class="partner-tier__label">Series partner</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo partner-logo--tinyfish"><img src="assets/img/partners/tinyfish.png" alt="TinyFish" loading="lazy" decoding="async"></span>
+            <span class="partner-logo partner-logo--tinyfish" data-cursor="Partner"><img src="assets/img/partners/tinyfish.png" alt="TinyFish" loading="lazy" decoding="async"></span>
           </div>
         </div>
 
         <div class="partner-tier">
           <span class="partner-tier__label">Platform partner</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo partner-logo--goavo"><img src="assets/img/partners/goavo.svg" alt="GoAvo" loading="lazy" decoding="async"></span>
+            <span class="partner-logo partner-logo--goavo" data-cursor="Partner"><img src="assets/img/partners/goavo.svg" alt="GoAvo" loading="lazy" decoding="async"></span>
           </div>
         </div>
 
         <div class="partner-tier">
           <span class="partner-tier__label">Ecosystem partners</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo partner-logo--google"><img src="assets/img/partners/google-for-developers.svg" alt="Google for Developers" loading="lazy" decoding="async"></span>
-            <span class="partner-logo partner-logo--paytm"><img src="assets/img/partners/paytm.png" alt="Paytm AI" loading="lazy" decoding="async"></span>
+            <span class="partner-logo partner-logo--google" data-cursor="Partner"><img src="assets/img/partners/google-for-developers.svg" alt="Google for Developers" loading="lazy" decoding="async"></span>
+            <span class="partner-logo partner-logo--paytm" data-cursor="Partner"><img src="assets/img/partners/paytm.png" alt="Paytm AI" loading="lazy" decoding="async"></span>
           </div>
         </div>
 
         <div class="partner-tier">
           <span class="partner-tier__label">Community partner</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo partner-logo--devrel"><img src="assets/img/partners/devrel-squad.svg" alt="DevRel Squad" loading="lazy" decoding="async"></span>
+            <span class="partner-logo partner-logo--devrel" data-cursor="Partner"><img src="assets/img/partners/devrel-squad.svg" alt="DevRel Squad" loading="lazy" decoding="async"></span>
           </div>
         </div>
 
         <div class="partner-tier">
           <span class="partner-tier__label">City partners</span>
           <div class="partner-tier__logos">
-            <span class="partner-logo partner-logo--neo4j"><img src="assets/img/partners/neo4j.svg" alt="Neo4j" loading="lazy" decoding="async"><small>Delhi</small></span>
-            <span class="partner-logo partner-logo--rezoomex"><img src="assets/img/partners/rezoomex.png" alt="Rezoomex" loading="lazy" decoding="async"><small>Pune</small></span>
+            <span class="partner-logo partner-logo--neo4j" data-cursor="Partner"><img src="assets/img/partners/neo4j.svg" alt="Neo4j" loading="lazy" decoding="async"><small>Delhi</small></span>
+            <span class="partner-logo partner-logo--rezoomex" data-cursor="Partner"><img src="assets/img/partners/rezoomex.png" alt="Rezoomex" loading="lazy" decoding="async"><small>Pune</small></span>
           </div>
         </div>
       </div>
@@ -150,7 +157,7 @@
       <div class="partner-page-grid">
         <div>
           <p class="section__label">02 / Why partner</p>
-          <h2 class="h2">A room that<br><span class="serif">does something.</span></h2>
+          <h2 class="h2" data-split>A room that<br><span class="serif">does something.</span></h2>
         </div>
         <div class="partner-page-copy">
           <p>You don't get a logo on a banner and a crowd walking past. You get engineers, founders, and domain experts working with your tools on a real problem, in front of the people who make adoption decisions.</p>
@@ -166,7 +173,7 @@
       <header class="sec-head">
         <div>
           <p class="section__label">03 / Ways in</p>
-          <h2 class="h2">Pick a lane.<br><span class="serif">Or build one.</span></h2>
+          <h2 class="h2" data-split>Pick a lane.<br><span class="serif">Or build one.</span></h2>
         </div>
         <p class="sec-head__lede">The scope is set around what the room actually needs. These are the shapes the conversation usually takes.</p>
       </header>
@@ -204,7 +211,7 @@
   <section class="section section--tight">
     <div class="wrap">
       <div class="band__in">
-        <p class="band__text">Tell us what you make. We'll tell you if the room <span class="serif">is right.</span></p>
+        <p class="band__text" data-split>Tell us what you make. We'll tell you if the room <span class="serif">is right.</span></p>
         <a class="btn" href="mailto:hello@noclue.co?subject=Partnership%20—%20Reality%20Check">
           <span>Talk to us</span>
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -237,6 +244,7 @@
         </div>
       </div>
       <div class="foot__bottom">
+          <button class="sound" id="soundToggle" type="button" aria-pressed="false"><i></i><span>Sound off</span></button>
         <span>© 2026 noClue. All rights reserved.</span>
         <span>Delhi · Bangalore · Pune</span>
         <a href="#top">Back to top ↑</a>
@@ -245,5 +253,6 @@
   </footer>
 
 <script src="assets/js/site.js" defer></script>
+<script src="assets/js/motion.js" defer></script>
 </body>
 </html>

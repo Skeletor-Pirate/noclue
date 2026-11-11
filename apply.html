@@ -26,13 +26,20 @@
 <link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/campaign.css">
+<link rel="stylesheet" href="assets/css/motion.css">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
-<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+<div class="wipe" id="wipe" aria-hidden="true"></div>
+<div class="pxfield" id="pxfield" aria-hidden="true"><canvas></canvas></div>
+<div class="scrollbar" id="scrollbar" aria-hidden="true"><span></span></div>
+<button class="totop" id="toTop" type="button" aria-label="Back to top" aria-hidden="true">&#8593;</button>
+
 
 <div class="utility">
   <div class="wrap utility__in">
@@ -98,21 +105,21 @@
       <p class="section__label">01 / Choose a city</p>
 
       <div class="apply-list">
-        <a class="apply-row" href="https://www.commudle.com/communities/noclue/events/reality-check-delhi-edition" target="_blank" rel="noopener">
+        <a class="apply-row" data-cursor="Apply" href="https://www.commudle.com/communities/noclue/events/reality-check-delhi-edition" target="_blank" rel="noopener">
           <span class="apply-row__no">01</span>
           <span class="apply-row__city">Delhi</span>
           <span class="apply-row__theme">Pilot to Product</span>
           <span class="apply-row__arrow" aria-hidden="true">↗</span>
         </a>
 
-        <a class="apply-row" href="https://share.goavo.ai/og/event?id=6acf13dc2c0656d24c945c9a&amp;utm_source=share&amp;utm_content=6acf13dc2c0656d24c945c9a&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">
+        <a class="apply-row" data-cursor="Apply" href="https://share.goavo.ai/og/event?id=6acf13dc2c0656d24c945c9a&amp;utm_source=share&amp;utm_content=6acf13dc2c0656d24c945c9a&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">
           <span class="apply-row__no">02</span>
           <span class="apply-row__city">Bangalore</span>
           <span class="apply-row__theme">Shipped Live</span>
           <span class="apply-row__arrow" aria-hidden="true">↗</span>
         </a>
 
-        <a class="apply-row" href="https://share.goavo.ai/og/event?id=6acf2b802c0656d24c945ca0&amp;utm_source=share&amp;utm_content=6acf2b802c0656d24c945ca0&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">
+        <a class="apply-row" data-cursor="Apply" href="https://share.goavo.ai/og/event?id=6acf2b802c0656d24c945ca0&amp;utm_source=share&amp;utm_content=6acf2b802c0656d24c945ca0&amp;utm_term=copy&amp;utm_medium=copy" target="_blank" rel="noopener">
           <span class="apply-row__no">03</span>
           <span class="apply-row__city">Pune</span>
           <span class="apply-row__theme">Breaking Point</span>
@@ -130,7 +137,7 @@
   <section class="section section--bone section--tight">
     <div class="wrap">
       <div class="band__in">
-        <p class="band__text">Bring the thing that has to work <span class="serif">on Monday.</span></p>
+        <p class="band__text" data-split>Bring the thing that has to work <span class="serif">on Monday.</span></p>
         <a class="btn btn--ink" href="programs.html">
           <span>Read the city briefs</span>
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -163,6 +170,7 @@
         </div>
       </div>
       <div class="foot__bottom">
+          <button class="sound" id="soundToggle" type="button" aria-pressed="false"><i></i><span>Sound off</span></button>
         <span>© 2026 noClue. All rights reserved.</span>
         <span>Delhi · Bangalore · Pune</span>
         <a href="#top">Back to top ↑</a>
@@ -171,5 +179,6 @@
   </footer>
 
 <script src="assets/js/site.js" defer></script>
+<script src="assets/js/motion.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,309 @@
+/* ==========================================================================
+   noClue — Reality Check
+   Motion layer: intro, page wipes, cursor states, smooth scroll, pixel
+   scrollbar, canvas field, masked reveals, pinned horizontal track.
+   Loaded after campaign.css. Everything degrades without JS.
+   ========================================================================== */
+
+:root{
+  --wipe-cols:16;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-io:cubic-bezier(.65,0,.35,1);
+}
+
+/* --------------------------------------------------------------------------
+   Intro overlay
+   -------------------------------------------------------------------------- */
+.intro{
+  position:fixed;inset:0;z-index:9990;
+  display:grid;place-items:center;
+  background:var(--ink);color:var(--paper);
+  transition:opacity .5s var(--ease-out),visibility .5s;
+}
+.intro.is-done{opacity:0;visibility:hidden;pointer-events:none}
+.intro__inner{
+  width:min(560px,calc(100% - 48px));
+  display:flex;flex-direction:column;align-items:center;gap:26px;
+}
+.intro__title{
+  width:100%;height:auto;display:block;
+  filter:invert(1);
+  clip-path:inset(0 0 0 0);
+  transform:none;
+  transition:clip-path .9s var(--ease-out),transform .9s var(--ease-out);
+}
+.intro--start .intro__title{clip-path:inset(0 0 100% 0);transform:scale(.96)}
+.intro__meta{width:100%;display:flex;flex-direction:column;gap:10px}
+.intro__tag{
+  font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(244,241,231,.62);text-align:center;
+  opacity:1;transform:none;
+  transition:opacity .5s var(--ease-out) .15s,transform .5s var(--ease-out) .15s;
+}
+.intro--start .intro__tag{opacity:0;transform:translateY(6px)}
+.intro__bar{height:4px;width:100%;background:rgba(244,241,231,.16);overflow:hidden}
+.intro__bar i{display:block;height:100%;width:0;background:var(--blue)}
+.intro__enter{
+  appearance:none;border:1px solid var(--paper);background:transparent;color:var(--paper);
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  padding:12px 22px;cursor:pointer;
+  clip-path:polygon(0 5px,5px 5px,5px 0,100% 0,100% calc(100% - 5px),calc(100% - 5px) calc(100% - 5px),calc(100% - 5px) 100%,0 100%);
+  opacity:1;transform:none;pointer-events:auto;
+  transition:opacity .4s var(--ease-out),transform .4s var(--ease-out),background .2s,color .2s;
+}
+.intro--start .intro__enter{opacity:0;transform:translateY(8px);pointer-events:none}
+.intro__enter:hover{background:var(--paper);color:var(--ink)}
+
+/* --------------------------------------------------------------------------
+   Page wipe transition
+   -------------------------------------------------------------------------- */
+.wipe{
+  position:fixed;inset:0;z-index:9995;display:flex;pointer-events:none;
+}
+.wipe__col{
+  flex:1 1 0;height:100%;background:var(--blue);
+  transform:scaleY(0);transform-origin:bottom;
+  transition:transform .42s var(--ease-out);
+}
+.wipe.is-covering .wipe__col{transform:scaleY(1)}
+.wipe.is-covering .wipe__col:nth-child(odd){background:var(--ink)}
+.wipe.is-revealing .wipe__col{transform:scaleY(0);transform-origin:top;transition-delay:.05s}
+
+/* --------------------------------------------------------------------------
+   Cursor (extends the base cursor in campaign.css)
+   -------------------------------------------------------------------------- */
+.cursor__label{
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%) scale(.6);
+  font-family:var(--mono);font-size:8px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--paper);
+  background:var(--blue);padding:4px 6px;white-space:nowrap;
+  opacity:0;transition:opacity .2s,transform .25s var(--ease-out);
+}
+.cursor.is-label{width:12px;height:12px;background:var(--blue);border-color:transparent}
+.cursor.is-label .cursor__label{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.cursor.is-hide{opacity:0!important}
+html.cursor-on,html.cursor-on *{cursor:none!important}
+html.cursor-on .cursor__label{cursor:none}
+
+/* --------------------------------------------------------------------------
+   Custom scrollbar (desktop, fine pointers)
+   -------------------------------------------------------------------------- */
+.scrollbar{
+  position:fixed;top:0;right:0;width:10px;height:100%;z-index:80;
+  background:transparent;pointer-events:none;opacity:0;
+  transition:opacity .3s;
+}
+.scrollbar.is-on{opacity:1}
+.scrollbar span{
+  position:absolute;right:2px;width:4px;
+  background:var(--blue);
+  transition:top .1s linear,height .2s var(--ease-out);
+}
+.scrollbar span::after{
+  content:"";position:absolute;inset:-4px 0 auto 0;height:3px;
+  background:var(--blue);box-shadow:0 6px 0 var(--blue),0 12px 0 var(--blue);
+  opacity:.55;
+}
+html.smooth-on{scrollbar-width:none}
+html.smooth-on::-webkit-scrollbar{width:0;height:0}
+
+/* --------------------------------------------------------------------------
+   Canvas pixel field
+   -------------------------------------------------------------------------- */
+.pxfield{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  opacity:0;transition:opacity 1s var(--ease-out);
+}
+.pxfield.is-on{opacity:1}
+.pxfield canvas{display:block;width:100%;height:100%}
+
+/* --------------------------------------------------------------------------
+   Masked text reveals
+   -------------------------------------------------------------------------- */
+.split__word{
+  display:inline-block;overflow:hidden;vertical-align:top;
+  padding-bottom:.06em;margin-bottom:-.06em;
+}
+.split__inner{
+  display:inline-block;
+  transform:translateY(112%);
+  transition:transform .9s var(--ease-out);
+  transition-delay:var(--sd,0s);
+}
+.is-split .split__inner{transform:none}
+.is-split .split__inner.is-out{transform:translateY(-112%)}
+
+/* --------------------------------------------------------------------------
+   Pixel button fill
+   -------------------------------------------------------------------------- */
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background-image:repeating-conic-gradient(var(--ink) 0% 25%,transparent 0% 50%);
+  background-size:10px 10px;
+  opacity:0;transform:scaleY(0);transform-origin:bottom;
+  transition:opacity .3s var(--ease-out),transform .45s var(--ease-out);
+}
+.btn:hover::before{opacity:1;transform:scaleY(1)}
+.btn:hover{color:var(--paper)}
+.btn--cream:hover::before{background-image:repeating-conic-gradient(var(--blue) 0% 25%,transparent 0% 50%)}
+.btn--ink:hover::before{background-image:repeating-conic-gradient(var(--paper) 0% 25%,transparent 0% 50%)}
+.btn--sm::before{background-size:8px 8px}
+
+/* --------------------------------------------------------------------------
+   Nav hover swap
+   -------------------------------------------------------------------------- */
+.nav a{position:relative;display:inline-block}
+.nav__stack{position:relative;display:block;overflow:hidden;height:1.35em}
+.nav__l{display:block;transition:transform .34s var(--ease-out)}
+.nav__l--alt{
+  position:absolute;left:0;top:0;color:var(--blue);
+  transform:translateY(110%);transition:transform .34s var(--ease-out);
+}
+.nav a:hover .nav__l,.nav a:focus-visible .nav__l{transform:translateY(-110%)}
+.nav a:hover .nav__l--alt,.nav a:focus-visible .nav__l--alt{transform:translateY(0)}
+
+/* --------------------------------------------------------------------------
+   Hero micro-interactions
+   -------------------------------------------------------------------------- */
+.hero__title img{transition:filter .3s var(--ease-out)}
+.hero__title.is-glitch img{animation:px-glitch .36s steps(2,end) 2}
+@keyframes px-glitch{
+  0%{transform:translate3d(0,0,0)}
+  25%{transform:translate3d(-4px,2px,0)}
+  50%{transform:translate3d(3px,-2px,0)}
+  75%{transform:translate3d(-2px,0,0)}
+  100%{transform:translate3d(0,0,0)}
+}
+.hero__aside{transition:transform .5s var(--ease-out)}
+.hero__badge{transition:opacity .3s}
+.hero__aside:hover .hero__badge{opacity:.85}
+
+/* --------------------------------------------------------------------------
+   Pinned horizontal city track (desktop)
+   -------------------------------------------------------------------------- */
+html.smooth-on{scroll-behavior:auto}
+html:not(.js) .intro{display:none}
+.cities{position:relative}
+.cities.is-pinned{padding:0}
+.cities__pin{position:relative}
+.cities__track{margin-top:clamp(28px,4vw,44px);overflow:hidden}
+.cities__track-inner{display:flex;gap:clamp(18px,2.4vw,30px);will-change:transform}
+.cities__track-inner .poster{flex:0 0 min(430px,72vw)}
+.cities__hint{
+  display:none;align-items:center;gap:10px;margin-top:22px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+.cities__hint i{display:block;width:26px;height:1px;background:var(--ink);animation:hint-slide 1.8s var(--ease-io) infinite}
+@keyframes hint-slide{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+
+@media (max-width:980px){
+  .cities__track{
+    overflow-x:auto;scroll-snap-type:x mandatory;
+    margin-right:calc(var(--pad) * -1);padding:2px 4px 18px;
+    scrollbar-width:thin;
+  }
+  .cities__track-inner{gap:16px}
+  .cities__track-inner .poster{flex:0 0 min(78vw,430px);scroll-snap-align:start}
+}
+
+@media (min-width:981px){
+  .cities.is-pinned{height:340vh}
+  .cities.is-pinned .cities__pin{
+    position:sticky;top:0;height:100svh;min-height:640px;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:calc(var(--head) + 28px) 0 40px;
+  }
+  .cities.is-pinned .h2{font-size:clamp(2.1rem,3.3vw,3.4rem)}
+  .cities.is-pinned .sec-head{margin-bottom:0}
+  .cities.is-pinned .cities__track{margin-top:clamp(20px,2.4vw,32px)}
+  .cities.is-pinned .cities__track-inner .poster{flex-basis:min(340px,24vw)}
+  .cities.is-pinned .cities__hint{display:flex}
+  .cities.is-pinned .city-note{margin-top:18px}
+}
+
+/* --------------------------------------------------------------------------
+   Ticker with scroll velocity
+   -------------------------------------------------------------------------- */
+.ticker__shift{display:flex;width:max-content;will-change:transform}
+.ticker__track{display:flex;width:max-content;animation:ticker 38s linear infinite}
+
+/* --------------------------------------------------------------------------
+   Section chrome
+   -------------------------------------------------------------------------- */
+.section__label::before{transition:transform .35s var(--ease-out)}
+.section__label:hover::before{transform:rotate(90deg)}
+.h2 .serif{transition:color .3s}
+.h2:hover .serif{color:var(--ink)}
+.poster{will-change:transform}
+.poster__apply{transition:background .2s,color .2s}
+.poster:hover .poster__apply{background:var(--ink);color:var(--paper)}
+
+/* --------------------------------------------------------------------------
+   FAQ animated height
+   -------------------------------------------------------------------------- */
+.faq__a{
+  overflow:hidden;max-height:0;
+  transition:max-height .45s var(--ease-out),padding .45s var(--ease-out);
+  padding-bottom:0;
+}
+.faq__item[open] .faq__a{max-height:420px;padding-bottom:22px}
+.faq__icon{transition:background .25s,border-color .25s}
+
+/* --------------------------------------------------------------------------
+   Back to top
+   -------------------------------------------------------------------------- */
+.totop{
+  position:fixed;right:22px;bottom:22px;z-index:75;
+  width:44px;height:44px;border:1px solid var(--ink);background:var(--paper);
+  color:var(--ink);cursor:pointer;font-size:16px;line-height:1;
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .3s,transform .3s var(--ease-out),background .2s,color .2s;
+  clip-path:polygon(0 5px,5px 5px,5px 0,100% 0,100% calc(100% - 5px),calc(100% - 5px) calc(100% - 5px),calc(100% - 5px) 100%,0 100%);
+}
+.totop.is-on{opacity:1;visibility:visible;transform:none}
+.totop:hover{background:var(--blue);color:var(--paper);border-color:var(--blue)}
+
+/* --------------------------------------------------------------------------
+   Mobile menu motion
+   -------------------------------------------------------------------------- */
+.menu__nav a{opacity:0;transform:translateY(26px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
+.menu.is-open .menu__nav a{opacity:1;transform:none}
+.menu.is-open .menu__nav a:nth-child(1){transition-delay:.05s}
+.menu.is-open .menu__nav a:nth-child(2){transition-delay:.11s}
+.menu.is-open .menu__nav a:nth-child(3){transition-delay:.17s}
+.menu.is-open .menu__nav a:nth-child(4){transition-delay:.23s}
+.menu.is-open .menu__nav a:nth-child(5){transition-delay:.29s}
+.menu__foot{opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease-out) .3s,transform .5s var(--ease-out) .3s}
+.menu.is-open .menu__foot{opacity:1;transform:none}
+
+/* --------------------------------------------------------------------------
+   Sound toggle
+   -------------------------------------------------------------------------- */
+.sound{
+  appearance:none;border:1px solid var(--line-mid);background:transparent;color:var(--ink);
+  font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;
+  padding:7px 10px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+}
+.sound i{width:6px;height:6px;background:var(--muted);display:block;transition:background .2s}
+.sound.is-on{border-color:var(--blue);color:var(--blue)}
+.sound.is-on i{background:var(--blue);animation:sound-pulse 1.4s ease-in-out infinite}
+@keyframes sound-pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* --------------------------------------------------------------------------
+   Reveal stagger
+   -------------------------------------------------------------------------- */
+[data-reveal]{transition-duration:.9s}
+
+/* --------------------------------------------------------------------------
+   Reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion:reduce){
+  .intro{display:none}
+  .split__inner{transform:none!important}
+  .wipe{display:none}
+  .pxfield{display:none}
+  .totop{display:none}
+  .menu__nav a,.menu__foot{opacity:1;transform:none}
+}

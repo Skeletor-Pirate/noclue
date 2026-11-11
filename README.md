@@ -128,6 +128,8 @@ The old Anton/Instrument Serif files were removed with the previous visual syste
 
 ## Interactions
 
+### Core (`assets/js/site.js`)
+
 - Custom blue pixel cursor (fine pointers only).
 - Subtle hero title parallax.
 - Magnetic primary buttons.
@@ -137,7 +139,30 @@ The old Anton/Instrument Serif files were removed with the previous visual syste
 - Reading progress bar.
 - Print/no-JS: content is visible without reveal animations.
 
-There is no live clock, form, tab switcher, or step scrollspy.
+### Motion layer (`assets/js/motion.js` + `assets/css/motion.css`)
+
+Everything below is optional chrome — the page is fully readable with JS off.
+
+| Feature | What it does |
+|---|---|
+| Intro loader | Home page only. Inverted pixel title assembles on ink, progress bar, "Enter the series". Skips on internal navigation |
+| Page wipe | Internal links trigger a 16-column pixel wipe (blue/ink) before navigating |
+| Smooth scroll | Desktop fine pointers only: lerped scrolling, keyboard support, anchor easing |
+| Pixel scrollbar | Custom 4px blue scrollbar on the right, draggable, replaces the native bar |
+| Canvas pixel field | Sparse dot grid that reacts to the pointer in electric blue and drifts with scroll |
+| Masked reveals | Headings split into words and rise out of per-word masks on scroll |
+| Pinned city track | The three city posters travel horizontally while the page scrolls vertically (desktop); snap carousel on mobile |
+| Velocity ticker | The marquee reacts to scroll speed |
+| Cursor states | Contextual labels (`Apply`, `Partner`, `View`) on a shrinking blue pixel |
+| Pixel button fill | Buttons fill with a checkerboard pixel grid on hover |
+| Nav hover swap | Nav labels roll up and a blue duplicate rolls in |
+| Count-up | The `03` city counter counts up when it enters the viewport |
+| FAQ height | Answers animate open/closed instead of snapping |
+| Back to top | Pixel button that appears past the first viewport |
+| Sound | Optional WebAudio blips on hover/click, off by default, toggle in the footer |
+
+`prefers-reduced-motion` disables the intro, wipes, canvas field, smooth scroll, and all
+reveals. Touch devices keep native scrolling and the native cursor.
 
 ---
 
@@ -159,8 +184,12 @@ noclue-site/
 ├── robots.txt
 ├── sitemap.xml
 ├── assets/
-│   ├── css/campaign.css
-│   ├── js/site.js
+│   ├── css/
+│   │   ├── campaign.css       visual system
+│   │   └── motion.css         motion layer (intro, wipes, reveals, track)
+│   ├── js/
+│   │   ├── site.js            core interactions
+│   │   └── motion.js          motion layer
 │   ├── fonts/
 │   └── img/
 │       ├── brand/

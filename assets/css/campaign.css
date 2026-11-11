@@ -269,7 +269,11 @@ section[id],article[id],div[id]{scroll-margin-top:calc(var(--head) + 18px)}
   margin:18px 0 0;font-family:var(--display);font-weight:900;
   font-size:clamp(5rem,8.5vw,8.4rem);line-height:.72;letter-spacing:-.09em;
 }
-.hero__badge span{
+.hero__badge .hero__count{
+  display:block;margin:0;font-family:var(--display);font-weight:900;
+  font-size:1em;line-height:.72;letter-spacing:-.09em;font-variant-numeric:tabular-nums;
+}
+.hero__badge > span:last-child{
   display:block;margin-top:16px;font-family:var(--mono);font-weight:500;
   font-size:9px;letter-spacing:.2em;text-transform:uppercase;line-height:1;
 }
