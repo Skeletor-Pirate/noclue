@@ -217,6 +217,17 @@ files from the repo root:
 
 Push to `main`; Vercel serves the static site. No environment variables are required.
 
+### Go-live checklist
+
+- The Vercel deployment for `ecb176d` completed successfully, but the project currently
+  has **Vercel Authentication (SSO) enabled**. Disable Deployment Protection for the
+  production environment in Vercel → Project → Settings → Deployment Protection, or the
+  public will be bounced to a Vercel login.
+- `noclue.co` currently resolves to a **Squarespace “Domain Not Claimed”** page, not to
+  Vercel. Add `noclue.co` as a domain on the Vercel project and update the DNS records
+  (or point the existing DNS at Vercel) before sharing the canonical URL.
+- Until both are done, use a Vercel deployment URL from the Vercel dashboard for review.
+
 ---
 
 ## Content notes
