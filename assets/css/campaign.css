@@ -157,6 +157,7 @@ body::after{
 .head__in{
   position:relative;
   z-index:2;
+  width:100%;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -212,7 +213,8 @@ body::after{
   display:flex;
   align-items:center;
   gap:12px;
-  z-index:2;
+  min-width:0;
+  z-index:3;
 }
 
 .btn{
@@ -950,7 +952,7 @@ html:not(.js) [data-reveal]{opacity:1;transform:none}
 }
 .partner-tier{
   display:grid;
-  grid-template-columns:minmax(150px,.34fr) minmax(0,1fr);
+  grid-template-columns:minmax(140px,.24fr) minmax(0,1fr);
   gap:clamp(18px,4vw,60px);
   align-items:center;
   padding:clamp(18px,2.3vw,28px) 0;
@@ -983,9 +985,9 @@ html:not(.js) [data-reveal]{opacity:1;transform:none}
   transition:color .2s,transform .3s var(--ease-out);
 }
 .partner-logo:hover{color:var(--verm);transform:translateY(-2px)}
-.partner-logo--serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.02em}
+.partner-logo--serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.02em;font-size:clamp(1.6rem,2.8vw,2.6rem)}
 .partner-logo--mono{font-family:var(--mono);font-weight:600;letter-spacing:-.04em;font-size:clamp(1.1rem,1.8vw,1.7rem)}
-.partner-logo--wide{font-family:var(--display);font-weight:400;letter-spacing:.01em;text-transform:uppercase;font-size:clamp(1.35rem,2.3vw,2.2rem)}
+.partner-logo--wide{font-weight:800;letter-spacing:-.045em;text-transform:none;font-size:clamp(1.35rem,2.2vw,2.05rem)}
 .partner-logo--light{font-weight:350;letter-spacing:-.03em}
 .partner-logo__dot{width:.19em;height:.19em;background:var(--verm);display:inline-block;margin-left:.03em}
 .partner-logo__dot--green{background:#2f7d4f}
@@ -1700,7 +1702,9 @@ html:not(.js) [data-reveal]{opacity:1;transform:none}
   .partner-tier{grid-template-columns:1fr;gap:12px}
   .partner-tier__logos{gap:20px}
   .tier-row{grid-template-columns:1fr auto;gap:8px}
-  .tier-row__desc{grid-column:1/-1}
+  .tier-row__name{grid-column:1;grid-row:1}
+  .tier-row__tag{grid-column:2;grid-row:1}
+  .tier-row__desc{grid-column:1/-1;grid-row:2}
 }
 
 @media (max-width:620px){
