@@ -149,6 +149,9 @@
       if (!previewFrame) previewFrame = requestAnimationFrame(movePreview);
 
       preview.querySelectorAll("img").forEach((img) => {
+        if (img.dataset.preview === city && !img.getAttribute("src")) {
+          img.src = img.dataset.src;
+        }
         img.classList.toggle("is-on", img.dataset.preview === city);
       });
       if (previewTag) {

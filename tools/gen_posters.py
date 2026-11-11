@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate city poster art for Reality Check in the campaign's paper/ink language.
 
-These are production placeholders: replace assets/img/cities/*.jpg with the
+These are production placeholders: replace assets/img/cities/*.png with the
 official city posters (same aspect ratio) without touching the HTML.
 """
 
@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "img" / "cities"
 FONTS = ROOT.parent / "realitycheck" / "fonts"
 W, H = 1400, 1750
+WEB_W, WEB_H = 900, 1125
 
 INK = (10, 10, 9)
 BONE = (242, 238, 228)
@@ -190,8 +191,11 @@ def build(city):
     img = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGB")
 
     OUT.mkdir(parents=True, exist_ok=True)
-    path = OUT / f"{city['slug']}.jpg"
-    img.save(path, quality=90, optimize=True)
+    web = img.resize((WEB_W, WEB_H), Image.LANCZOS).convert(
+        "P", palette=Image.Palette.ADAPTIVE, colors=128
+    )
+    path = OUT / f"{city['slug']}.png"
+    web.save(path, optimize=True)
     print(path, path.stat().st_size)
 
 

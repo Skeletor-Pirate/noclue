@@ -82,12 +82,14 @@ The three poster images are **production placeholders** generated in the campaig
 language:
 
 ```
-assets/img/cities/delhi.jpg       (4:5, 1400×1750)
-assets/img/cities/bangalore.jpg   (4:5, 1400×1750)
-assets/img/cities/pune.jpg        (4:5, 1400×1750)
+assets/img/cities/delhi.png       (4:5, 900×1125)
+assets/img/cities/bangalore.png   (4:5, 900×1125)
+assets/img/cities/pune.png        (4:5, 900×1125)
 ```
 
 Replace any file with the official city poster, keeping the same filename and a 4:5 crop.
+The site uses the `.png` files directly, so the supplied posters can drop in without
+changing HTML.
 No HTML or CSS changes are needed. Regenerate the placeholders with:
 
 ```bash
@@ -239,8 +241,8 @@ Push to `main`; Vercel serves the static site. No environment variables are requ
 - Contrast: body copy passes AA on ink; paper sections use dark ink. Accent red is reserved
   for labels/large type; lime is used on dark only.
 - Fonts are self-hosted and subset; no third-party requests, no tracking.
-- City poster placeholders are ~700 KB each. Replace with optimised JPG/WebP files if the
-  official posters are large.
+- City poster placeholders are ~775 KB each. Replace with optimised files if the official
+  posters are much larger.
 - The page works without JS; only reveal animations and pointer effects need it.
 
 ---
