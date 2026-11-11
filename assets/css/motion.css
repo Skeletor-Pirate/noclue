@@ -316,14 +316,18 @@ html:not(.js) .intro{display:none}
    skyline band itself, so there is only ever one train on the viaduct.
    -------------------------------------------------------------------------- */
 .hero__skyline{position:relative;overflow:hidden}
+/* The band is scaled up so the cityscape and the metro read larger.
+   The wrapper keeps the sprite locked to the artwork when it scales. */
+.hero__skyline-scale{position:relative;width:116%;margin-left:-8%}
+.hero__skyline-scale img{display:block;width:100%;height:auto}
 .hero__metro{
-  position:absolute;left:0;top:59.1%;
+  position:absolute;left:0;top:61.8%;
   width:26.83%;
   animation:metro-run 32s linear infinite;
   will-change:transform;
 }
 .hero__metro i{
-  display:block;width:100%;aspect-ratio:1246 / 84;
+  display:block;width:100%;aspect-ratio:1246 / 83;
   background:url("../img/brand/metro.png") no-repeat center / 100% 100%;
   animation:metro-bob 1.7s ease-in-out infinite alternate;
   filter:drop-shadow(0 4px 3px rgba(11,11,11,.45));

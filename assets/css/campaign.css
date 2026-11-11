@@ -1078,3 +1078,21 @@ html:not(.js) [data-reveal]{opacity:1;transform:none}
   .track__row span:last-child{text-align:left}
   .day-table__row{grid-template-columns:62px minmax(0,1fr);gap:12px}
 }
+
+/* --------------------------------------------------------------------------
+   City partners: the city name carries the row
+   -------------------------------------------------------------------------- */
+.partner-city{display:inline-flex;align-items:center;gap:14px}
+.partner-city b{
+  font-family:var(--display);font-size:1.02rem;font-weight:850;letter-spacing:-.02em;
+  line-height:1;color:var(--ink);position:relative;padding-left:16px;white-space:nowrap;
+}
+.partner-city b::before{
+  content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:8px;height:8px;background:var(--blue);
+}
+.partner-city .partner-logo{padding-left:16px;border-left:1px solid var(--line)}
+.partner-logo small{
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink);
+}

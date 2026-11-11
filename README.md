@@ -75,7 +75,7 @@ labelled **DevRel Squad** as supplied.
 assets/img/brand/reality-check-title.png   pixel title cropped from the Delhi poster
 assets/img/brand/noclue-black.png          trimmed noClue wordmark
 assets/img/brand/noclue-white.png          trimmed white noClue wordmark
-assets/img/brand/skyline.jpg               city skyline strip from the deck (train removed)
+assets/img/brand/skyline.jpg               city skyline strip from the deck (train lifted out)
 assets/img/brand/metro.png                 the deck's metro train, lifted out as a sprite
 assets/img/og.jpg                          1200×630 social card
 favicon.svg                                 cream/blue pixel favicon
