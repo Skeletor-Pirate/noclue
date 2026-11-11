@@ -310,24 +310,37 @@ html:not(.js) .intro{display:none}
 
 /* --------------------------------------------------------------------------
    Metro running along the deck skyline
+
+   The sprite is the real Namma Metro train lifted out of the supplied deck
+   artwork (assets/img/brand/metro.png). The train was removed from the
+   skyline band itself, so there is only ever one train on the viaduct.
    -------------------------------------------------------------------------- */
 .hero__skyline{position:relative;overflow:hidden}
 .hero__metro{
-  position:absolute;left:-88px;bottom:29%;
-  width:88px;height:18px;
-  background:
-    repeating-linear-gradient(90deg,var(--paper) 0 6px,transparent 6px 13px) 0 6px/100% 6px no-repeat,
-    var(--blue);
-  box-shadow:0 -4px 0 0 var(--ink),0 0 0 2px rgba(11,11,11,.55);
-  animation:metro-run 34s linear infinite;
+  position:absolute;left:0;top:59.1%;
+  width:26.83%;
+  animation:metro-run 32s linear infinite;
   will-change:transform;
 }
-.hero__metro::after{
-  content:"";position:absolute;left:3px;right:3px;top:-4px;height:4px;background:var(--ink);
+.hero__metro i{
+  display:block;width:100%;aspect-ratio:1246 / 84;
+  background:url("../img/brand/metro.png") no-repeat center / 100% 100%;
+  animation:metro-bob 1.7s ease-in-out infinite alternate;
+  filter:drop-shadow(0 4px 3px rgba(11,11,11,.45));
+}
+.hero__metro::before{
+  content:"";position:absolute;inset:0;
+  background:url("../img/brand/metro.png") no-repeat center / 100% 100%;
+  filter:blur(3px);opacity:.28;transform:translateX(-1.4%);
 }
 @keyframes metro-run{
-  from{transform:translate3d(0,0,0)}
-  to{transform:translate3d(calc(100vw + 160px),0,0)}
+  0%{transform:translate3d(-32%,0,0)}
+  56%{transform:translate3d(112%,0,0)}
+  100%{transform:translate3d(112%,0,0)}
+}
+@keyframes metro-bob{
+  from{transform:translateY(0)}
+  to{transform:translateY(-1px)}
 }
 @media (prefers-reduced-motion:reduce){
   .hero__metro{animation:none;display:none}

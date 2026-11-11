@@ -75,7 +75,8 @@ labelled **DevRel Squad** as supplied.
 assets/img/brand/reality-check-title.png   pixel title cropped from the Delhi poster
 assets/img/brand/noclue-black.png          trimmed noClue wordmark
 assets/img/brand/noclue-white.png          trimmed white noClue wordmark
-assets/img/brand/skyline.jpg               city skyline strip from the deck
+assets/img/brand/skyline.jpg               city skyline strip from the deck (train removed)
+assets/img/brand/metro.png                 the deck's metro train, lifted out as a sprite
 assets/img/og.jpg                          1200×630 social card
 favicon.svg                                 cream/blue pixel favicon
 icon-192.png / icon-512.png                 PWA icons
@@ -155,7 +156,7 @@ Everything below is optional chrome — the page is fully readable with JS off.
 | Velocity ticker | The marquee reacts to scroll speed |
 | Cursor states | Contextual labels (`Apply`, `Partner`, `View`) on a shrinking blue pixel |
 | Pixel button fill | Buttons fill with a checkerboard pixel grid on hover |
-| Metro | A pixel train runs along the bridge in the hero skyline band |
+| Metro | The real metro train from the deck artwork runs along the viaduct in the hero band |
 | Nav hover swap | Nav labels roll up and a blue duplicate rolls in |
 | Count-up | The `03` city counter counts up when it enters the viewport |
 | FAQ height | Answers animate open/closed instead of snapping |
