@@ -4,49 +4,47 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Manifesto — noClue</title>
-<meta name="description" content="The noClue manifesto: AI is a human topic, demos aren't deployments, proof of work beats pedigree, and builders deserve to be paid.">
+<meta name="description" content="Less hype. More shipped. The noClue manifesto: real problems, real rooms, and work that survives contact with reality.">
 <link rel="canonical" href="https://noclue.co/manifesto.html">
 <meta name="theme-color" content="#0a0a09">
 <meta name="apple-mobile-web-app-title" content="noClue">
-<meta property="og:type" content="article">
+<meta property="og:type" content="website">
 <meta property="og:site_name" content="noClue">
-<meta property="og:title" content="The noClue manifesto">
-<meta property="og:description" content="AI is a human topic. Demos aren't deployments. Small rooms beat big crowds. Builders deserve to be paid.">
+<meta property="og:title" content="Manifesto — noClue">
+<meta property="og:description" content="Real problems. Real rooms. Work that survives contact with reality.">
 <meta property="og:url" content="https://noclue.co/manifesto.html">
 <meta property="og:image" content="https://noclue.co/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Manifesto — noClue">
+<meta name="twitter:description" content="Real problems. Real rooms. Work that survives contact with reality.">
+<meta name="twitter:image" content="https://noclue.co/assets/img/og.jpg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/sections.css">
-<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/campaign.css">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
 
-<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 <a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 
 <header class="head" id="head">
   <div class="wrap head__in">
     <a class="brand" href="index.html" aria-label="noClue home">noClue<span class="brand__dot" aria-hidden="true"></span></a>
-
     <nav class="nav" aria-label="Primary">
-      <a href="index.html#problem">The problem</a>
-      <a href="index.html#method">Method</a>
-      <a href="programs.html">Programs</a>
-      <a href="manifesto.html" aria-current="page">Manifesto</a>
+      <a href="index.html#premise">The premise</a>
+      <a href="programs.html">The series</a>
       <a href="partners.html">Partners</a>
+      <a href="manifesto.html">Manifesto</a>
     </nav>
-
-    <div class="head__right">
-      <a class="btn btn--sm head__apply" href="apply.html">
-        <span>Apply</span>
-        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.4"/></svg>
-      </a>
+    <div class="head__actions">
+      <a class="btn btn--lime btn--sm" href="apply.html">Apply</a>
       <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
         <span></span><span></span>
       </button>
@@ -56,15 +54,14 @@
 
 <div class="menu" id="menu" aria-hidden="true">
   <div class="menu__nav">
-    <a href="index.html#problem">The problem <span>01</span></a>
-    <a href="index.html#method">Method <span>02</span></a>
-    <a href="programs.html">Programs <span>03</span></a>
+    <a href="index.html#premise">The premise <span>01</span></a>
+    <a href="programs.html">The series <span>02</span></a>
+    <a href="partners.html">Partners <span>03</span></a>
     <a href="manifesto.html">Manifesto <span>04</span></a>
-    <a href="partners.html">Partners <span>05</span></a>
-    <a href="apply.html">Apply <span>06</span></a>
+    <a href="apply.html">Apply <span>05</span></a>
   </div>
   <div class="menu__foot">
-    <span>Delhi · Bangalore · Mumbai</span>
+    <span>Delhi · Bangalore · Pune</span>
     <a href="mailto:hello@noclue.co">hello@noclue.co</a>
   </div>
 </div>
@@ -73,191 +70,118 @@
 
   <section class="page-hero" aria-labelledby="page-title">
     <div class="wrap">
-      <nav class="page-hero__crumbs" aria-label="Breadcrumb">
-        <a href="index.html">Home</a><span>/</span><span>Manifesto</span>
-      </nav>
-      <p class="kicker">The noClue manifesto</p>
-      <h1 class="page-hero__title" id="page-title">A few problems with <em class="serif">how AI gets built.</em></h1>
+      <div class="page-hero__meta">
+        <span>noClue / Manifesto</span>
+        <span>Reality Check / 03 cities</span>
+      </div>
+      <h1 class="page-hero__title" id="page-title">Less hype.<span class="serif">More shipped.</span></h1>
       <div class="page-hero__foot">
-        <p class="page-hero__lede">We started noClue because the rooms we wanted didn't exist. The ones that did were built for announcements, not work. This is what we believe — and what we're building toward.</p>
-        <p class="page-hero__meta">
-          <span>No. 001</span>
-          <span>India → US / EU</span>
-          <span>Read time · 2 min</span>
-        </p>
+        <p class="page-hero__lede">We're not building another AI community. We're building the room where the work has to survive contact with reality.</p>
+        <div class="page-hero__facts">
+          <span>Focus — <b>Applied AI</b></span>
+          <span>Method — <b>Real rooms, real constraints</b></span>
+          <span>Standard — <b>Show the work</b></span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--paper">
+  <section class="section">
     <div class="wrap">
-      <div class="manifesto-lead">
-        <p class="manifesto-lead__statement" data-reveal>We're not trying to be the loudest room. We're trying to be the one people leave with <em>something.</em></p>
-        <div data-reveal>
-          <p class="manifesto-lead__copy">The AI conversation has a volume problem. Plenty of certainty, plenty of theatre, very little evidence of what happens when the system meets a real business, a real dataset, or a real Monday morning.</p>
-          <p class="manifesto-lead__copy">noClue is our attempt to build the opposite: smaller, more honest, more useful. Here is the short version of what we believe. We'll keep testing it against the work.</p>
+      <div class="manifesto">
+        <p class="section__label">01 / The belief</p>
+        <h2 class="manifesto__lede">The future of AI won't be decided in a demo.<span class="serif">It'll be decided in the room where it has to work.</span></h2>
+
+        <div class="manifesto__body">
+          <p>Most AI conversations stop at what's possible. The harder, more useful conversation starts after that: what happens when the model meets a messy dataset, a security review, a sceptical operator, or a business that needs the thing to work on a Tuesday.</p>
+          <p>noClue exists to put the people who can build in the same room as the people who understand the problem — and to make the conversation specific enough to produce something. Not inspiration. Not attendance. A next step.</p>
         </div>
-      </div>
 
-      <div class="beliefs">
-        <article class="belief" data-reveal>
-          <span class="belief__num">01</span>
-          <div>
-            <h2 class="belief__title">AI is not a developer topic. <em>It's a human one.</em></h2>
-            <p class="belief__text">The biggest AI decisions will be made in hospitals, banks, warehouses, and classrooms. The people who understand those places need to be in the room where the systems are designed — not consulted at the end.</p>
-          </div>
-        </article>
-
-        <article class="belief" data-reveal>
-          <span class="belief__num">02</span>
-          <div>
-            <h2 class="belief__title">The best products come from people who understand the problem, not just the technology.</h2>
-            <p class="belief__text">Domain knowledge is not a nice-to-have. It is the raw material. Engineers who have never lived the problem can build something impressive and useless at the same time.</p>
-          </div>
-        </article>
-
-        <article class="belief" data-reveal>
-          <span class="belief__num">03</span>
-          <div>
-            <h2 class="belief__title">Demos prove ideas. <em>Deployments prove value.</em></h2>
-            <p class="belief__text">A demo survives a stage. A deployment survives a Monday. We care about the second one — the data, the cost, the failure modes, and the person who has to support it at 2 AM.</p>
-          </div>
-        </article>
-
-        <article class="belief" data-reveal>
-          <span class="belief__num">04</span>
-          <div>
-            <h2 class="belief__title">Small rooms beat <em>big crowds.</em></h2>
-            <p class="belief__text">A hundred people who build will outproduce a thousand who watch. We would rather curate hard and leave seats empty than fill a room with people who came for the bag.</p>
-          </div>
-        </article>
-
-        <article class="belief" data-reveal>
-          <span class="belief__num">05</span>
-          <div>
-            <h2 class="belief__title">What you've built matters more than <em>where you studied.</em></h2>
-            <p class="belief__text">Pedigree is a proxy. Work is evidence. We will keep choosing the person with a working thing and a clear explanation over the person with the right logo on their CV.</p>
-          </div>
-        </article>
-
-        <article class="belief" data-reveal>
-          <span class="belief__num">06</span>
-          <div>
-            <h2 class="belief__title">Builders deserve <em>to be paid.</em></h2>
-            <p class="belief__text">Community is not a business model. Exposure does not pay rent. The long-term shape of noClue includes paid work for the people doing it — through projects, labs, and the network itself.</p>
-          </div>
-        </article>
-
-        <article class="belief" data-reveal>
-          <span class="belief__num">07</span>
-          <div>
-            <h2 class="belief__title">Great ecosystems are connected across borders, not <em>isolated by them.</em></h2>
-            <p class="belief__text">India has builders. The US and Europe have problems and resources. The distance between them is mostly logistics, not talent. We're building the bridge on purpose.</p>
-          </div>
-        </article>
-
-        <article class="belief" data-reveal>
-          <span class="belief__num">08</span>
-          <div>
-            <h2 class="belief__title">We'd rather ship something small than <em>announce something big.</em></h2>
-            <p class="belief__text">Restraint is part of the brand. We will not promise a date we haven't validated or a product we haven't built. If it isn't real yet, we'll say so.</p>
-          </div>
-        </article>
-      </div>
-
-      <div class="manifesto-pull" data-reveal>
-        <p class="kicker">In short</p>
-        <blockquote class="manifesto-pull__quote">“Less hype. More shipped. <em>That's the whole thing.</em>”</blockquote>
-      </div>
-
-      <div class="manifesto-sign">
-        <span class="manifesto-sign__mark">noClue<span aria-hidden="true"></span></span>
-        <span class="manifesto-sign__meta">Written by the people building it.<br>Revised when the work says so.</span>
+        <div class="principles">
+          <article class="principle">
+            <h3>The problem is the brief.</h3>
+            <p>Start from the constraint, not the trend. The most interesting AI work begins with something that doesn't fit neatly into a slide.</p>
+          </article>
+          <article class="principle">
+            <h3>Show the work.</h3>
+            <p>Demos are easy. Deployments are the story. We care about what happened after the demo ended.</p>
+          </article>
+          <article class="principle">
+            <h3>Curate for friction.</h3>
+            <p>Put builders, operators, and domain experts in the same conversation. Agreement is comfortable; friction is useful.</p>
+          </article>
+          <article class="principle">
+            <h3>Output over attendance.</h3>
+            <p>Leave with a decision, a collaborator, a fix, or a reason to stop. A folder of notes is not an outcome.</p>
+          </article>
+          <article class="principle">
+            <h3>The network is the product.</h3>
+            <p>The room should outlast the event. The point is not a calendar; it's a group of people who keep building together.</p>
+          </article>
+          <article class="principle">
+            <h3>No invented proof.</h3>
+            <p>If it hasn't happened, we don't claim it. No fake stats, no borrowed logos, no imaginary case studies. The work speaks first.</p>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="cta">
+  <section class="quote">
+    <span class="quote__ghost" aria-hidden="true">03</span>
+    <div class="wrap quote__in">
+      <p class="section__label">The short version</p>
+      <h2 class="quote__text">Real problems.<span class="serif">Real rooms.</span></h2>
+      <div class="quote__foot">
+        <span class="quote__by">noClue / Reality Check</span>
+        <a class="tlink" href="programs.html">See the series</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--bone section--tight">
     <div class="wrap">
-      <p class="kicker">Join the room</p>
-      <h2 class="cta__title">Build <em class="serif">with us</em><span class="hero__stop" aria-hidden="true"></span></h2>
-      <div class="cta__foot">
-        <p class="cta__body">If this sounds like your kind of room, apply. If you're not sure, apply anyway — tell us what you're working on and we'll tell you honestly whether it fits.</p>
-        <div class="cta__actions">
-          <a class="btn" href="apply.html">
-            <span>Apply to join</span>
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.4"/></svg>
-          </a>
-          <a class="btn btn--ghost" href="programs.html">
-            <span>See the programs</span>
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.4"/></svg>
-          </a>
-        </div>
-        <div class="cta__contact">
-          <span>Or write to</span><br>
-          <a class="cta__email" href="mailto:hello@noclue.co">hello@noclue.co</a>
-        </div>
+      <div class="band__in">
+        <p class="band__text">If that sounds like your kind of room, <span class="serif">come build in it.</span></p>
+        <a class="btn btn--ink" href="apply.html">
+          <span>Apply for a city</span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
       </div>
     </div>
   </section>
 
 </main>
 
-<footer class="foot">
-  <div class="wrap">
-    <div class="foot__top">
-      <a class="foot__brand" href="index.html" aria-label="noClue home">noClue<span class="brand__dot" aria-hidden="true"></span></a>
-      <p class="foot__tag">Less hype.<br>More shipped.</p>
-    </div>
-
-    <div class="foot__grid">
-      <div>
-        <p class="foot__label">Explore</p>
-        <div class="foot__links">
-          <a href="index.html#problem">The problem</a>
-          <a href="index.html#method">The method</a>
-          <a href="programs.html">Reality Check</a>
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot__top">
+        <div>
+          <p class="foot__brand">noClue<span>.</span></p>
+          <p class="foot__tag">A network for the people who have to make AI work in the real world.</p>
+        </div>
+        <div class="foot__col">
+          <h3>The series</h3>
+          <a href="programs.html#delhi">Delhi — Pilot to Product</a>
+          <a href="programs.html#bangalore">Bangalore — Shipped Live</a>
+          <a href="programs.html#pune">Pune — Breaking Point</a>
+        </div>
+        <div class="foot__col">
+          <h3>noClue</h3>
           <a href="manifesto.html">Manifesto</a>
-          <a href="index.html#faq">FAQ</a>
-        </div>
-      </div>
-
-      <div>
-        <p class="foot__label">Network</p>
-        <div class="foot__links">
-          <a href="apply.html">For builders</a>
-          <a href="partners.html">For companies</a>
-          <a href="apply.html">For domain experts</a>
+          <a href="partners.html">Partners</a>
           <a href="apply.html">Apply</a>
+          <a href="mailto:hello@noclue.co">hello@noclue.co</a>
         </div>
       </div>
-
-      <div>
-        <p class="foot__label">Elsewhere</p>
-        <div class="foot__links">
-          <a href="#" aria-label="noClue on LinkedIn">LinkedIn</a>
-          <a href="#" aria-label="noClue on Instagram">Instagram</a>
-          <a href="#" aria-label="noClue on X">X — coming</a>
-          <a href="mailto:hello@noclue.co">Email</a>
-        </div>
-      </div>
-
-      <div class="foot__contact">
-        <p class="foot__label">Contact</p>
-        <a href="mailto:hello@noclue.co">hello@noclue.co</a>
-        <p>Building something? Want to partner? Let's talk. We answer every serious note.</p>
+      <div class="foot__bottom">
+        <span>© 2026 noClue. All rights reserved.</span>
+        <span>Delhi · Bangalore · Pune</span>
+        <a href="#top">Back to top ↑</a>
       </div>
     </div>
+  </footer>
 
-    <div class="foot__bottom">
-      <span>© 2026 noClue</span>
-      <span>Delhi · Bangalore · Mumbai</span>
-      <span>IST <span class="foot__clock" data-clock>--:--</span></span>
-      <a href="#top">Back to top ↑</a>
-    </div>
-  </div>
-</footer>
-
-<script src="assets/js/site.js"></script>
+<script src="assets/js/site.js" defer></script>
 </body>
 </html>

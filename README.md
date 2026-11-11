@@ -1,12 +1,12 @@
-# noClue — website
+# noClue — Reality Check
 
-A static, dependency-free site for **noClue**: a curated network of people building with AI.
-Editorial black-and-paper art direction, oversized type, rotating stamps, a city switcher,
-and a working application form UI.
+A static, dependency-free campaign site for **Reality Check**, a three-city series by
+noClue. The design follows the supplied campaign poster/deck language: near-black paper,
+bone display type, vermilion accents, lime utility marks, oversized numerals, and
+city-poster cards.
 
-Built from the supplied *Website Content Bank* — no invented member counts, past-event
-names, Hacker House dates, or live "Solution Lab / Ventures" claims. Anything not yet real
-is labelled as direction or "in development."
+The site is deliberately built without a framework or build step. Open the HTML, edit,
+deploy.
 
 ---
 
@@ -19,10 +19,7 @@ python serve.py
 
 Open `http://localhost:8080`. `serve.py` is a development-only wrapper around Python's
 stdlib server that sets the right MIME type for WOFF2 fonts. Plain
-`python -m http.server 8080` also works (browsers generally accept the fallback MIME,
-but may log a console warning).
-
-No build step, no framework, no package manager.
+`python -m http.server 8080` also works.
 
 ---
 
@@ -30,64 +27,141 @@ No build step, no framework, no package manager.
 
 | File | Purpose |
 |---|---|
-| `index.html` | Home: hero, the seven problems, the method, how it works, Reality Check, proof of work, manifesto quote, FAQ, CTA |
-| `programs.html` | Reality Check 2026: premise, Delhi / Bangalore / Mumbai, call for papers, what comes next |
-| `manifesto.html` | The beliefs, in long form (~350 words) |
-| `partners.html` | Company pitch, partnership formats and tiers, domain experts, contact |
-| `apply.html` | Application form with validation, city/role prefill from links, success state |
+| `index.html` | Campaign home: hero, premise, three city posters, format, partners, manifesto quote, FAQ, city picker |
+| `programs.html` | The series in detail: Delhi / Bangalore / Pune briefs with external apply links |
+| `partners.html` | Partner wall, why partner, partnership formats, contact |
+| `manifesto.html` | The noClue beliefs and operating principles |
+| `apply.html` | City chooser; sends each city to its real registration page |
 
 Shared chrome (header, mobile menu, footer) is duplicated per page on purpose: no JS
 dependency for navigation, and no build step.
 
-### Nice details
+---
 
-- `programs.html?…` links to `apply.html?city=delhi` / `?role=expert`; the form preselects.
-- The city switcher is keyboard accessible (arrow keys, Home, End).
-- The process section updates its step counter as you scroll.
-- Live IST clock in the footer.
-- Custom cursor (dot + trailing ring) with hover-grow on interactive elements, hidden on touch/reduced-motion.
-- Magnetic hover on buttons and key cards, plus cursor-tracked parallax on the hero title.
-- Everything respects `prefers-reduced-motion`.
-- Print / no-JS still reads: reveal animations only apply once `html.js` is set.
+## Registration links
+
+| City | Theme | Registration |
+|---|---|---|
+| Delhi | Pilot to Product | `https://www.commudle.com/communities/noclue/events/reality-check-delhi-edition` |
+| Bangalore | Shipped Live | `https://share.goavo.ai/og/event?id=6acf13dc2c0656d24c945c9a&utm_source=share&utm_content=6acf13dc2c0656d24c945c9a&utm_term=copy&utm_medium=copy` |
+| Pune | Breaking Point | `https://share.goavo.ai/og/event?id=6acf2b802c0656d24c945ca0&utm_source=share&utm_content=6acf2b802c0656d24c945ca0&utm_term=copy&utm_medium=copy` |
+
+All city Apply buttons open these URLs in a new tab. There is no internal application
+form anymore; the registration page is the source of truth for date, venue, and capacity.
 
 ---
 
-## What to change before going live
+## Partners
 
-These are the only deliberate placeholders:
+Mapping used in the partner wall:
 
-1. **Domain** — `https://noclue.co` appears in canonical tags, Open Graph URLs, `robots.txt`
-   and `sitemap.xml`. Replace with the real domain.
-2. **Email** — `hello@noclue.co` appears across all pages, mailto links and the form's
-   fallback copy. Replace with the real inbox.
-3. **Social links** — the footer's LinkedIn / Instagram / X links are `href="#"`. Point them
-   at real profiles (or remove the column).
-4. **Partner deck** — "Request the deck" opens a mailto with a subject line, because no PDF
-   was supplied. Swap it for the real deck URL when it exists.
-5. **Application form** — the form is front-end only. It validates and shows the confirmation
-   state, but does not send anywhere. Wire it to Formspree, Netlify Forms, a serverless
-   endpoint, or your ATS. See below.
-6. **Dates** — the site says "November 2026" and "Reality Check 2026". The content bank did
-   not give exact dates; the prior film did. Confirm before publishing.
+| Partner | Role |
+|---|---|
+| TinyFish | Series partner |
+| GoAvo | Platform partner |
+| Google for Developers | Ecosystem partner |
+| Paytm | Ecosystem partner |
+| DevRel | Community partner |
+| Neo4j | City partner — Delhi |
+| Rezoomex | City partner — Pune |
 
-### Wiring the form
+The current partner marks are typographic, so the site is complete without logo files.
+They can be replaced with official SVGs without changing the layout. See
+**Replacing assets** below.
 
-In `apply.html`, change:
+> Note: the brief supplied “devrel” in lowercase. It is rendered as **DevRel** here.
+> Correct the name if the intended partner is DevRev or another community.
 
-```html
-<form class="form" id="applyForm" novalidate>
+---
+
+## Replacing assets
+
+### City posters
+
+The three poster images are **production placeholders** generated in the campaign's visual
+language:
+
+```
+assets/img/cities/delhi.jpg       (4:5, 1400×1750)
+assets/img/cities/bangalore.jpg   (4:5, 1400×1750)
+assets/img/cities/pune.jpg        (4:5, 1400×1750)
 ```
 
-to a real action and let `site.js` skip its demo success state, or keep the current
-validation and POST the values in the submit handler. The simplest options:
+Replace any file with the official city poster, keeping the same filename and a 4:5 crop.
+No HTML or CSS changes are needed. Regenerate the placeholders with:
 
-- **Netlify**: add `data-netlify="true"` and a hidden `form-name` input.
-- **Formspree**: `action="https://formspree.io/f/XXXX" method="POST"`.
-- **Custom**: `fetch(endpoint, { method: "POST", body: new FormData(form) })` and only then
-  show `#applySuccess`.
+```bash
+python tools/gen_posters.py
+```
 
-The current success copy is a demo of the confirmation state. Adapt it once the form is
-wired to a real inbox and response process.
+### Partner logos
+
+The partner wall currently uses `.partner-logo` text marks. To use the supplied SVGs:
+
+1. Put the files in `assets/img/partners/` using clear names, e.g.
+   `tinyfish.svg`, `goavo.svg`, `google-for-developers.svg`, `paytm.svg`,
+   `devrel.svg`, `neo4j.svg`, `rezoomex.svg`.
+2. In `index.html` and `partners.html`, replace each `<span class="partner-logo …">…</span>`
+   with:
+
+   ```html
+   <img class="partner-logo-img" src="assets/img/partners/tinyfish.svg"
+        alt="TinyFish" loading="lazy">
+   ```
+
+3. Add this to `campaign.css` if needed:
+
+   ```css
+   .partner-logo-img{height:clamp(26px,3.2vw,44px);width:auto;max-width:220px;object-fit:contain}
+   ```
+
+Use monochrome or dark logo variants on the paper partner section. If the supplied files
+are white-only, either invert them for the paper section or move the partner wall back to a
+dark section.
+
+### Social card
+
+`assets/img/og.jpg` is the 1200×630 campaign card. Regenerate it with:
+
+```bash
+python tools/gen_og.py
+```
+
+---
+
+## Design system
+
+| Token | Value | Use |
+|---|---|---|
+| `--ink` | `#0a0a09` | base / dark sections |
+| `--paper` | `#f2eee4` | paper sections, primary buttons |
+| `--verm` | `#e33a1b` | accent, rules, city themes |
+| `--lime` | `#d9ff43` | primary CTA, live/utility marks |
+| `--display` | Anton | headlines, city names, numerals |
+| `--serif` | Instrument Serif Italic | tension words, city themes |
+| `--sans` | Archivo | body |
+| `--mono` | JetBrains Mono | labels, metadata, buttons |
+
+- Grain sits above the whole page (`body::after`, soft-light) but below the menu/header.
+- The paper sections use the generated `paper.jpg` texture.
+- Poster cards use a 4:5 crop and a subtle scale on hover.
+- City rows in the hero drive a cursor-following poster preview on fine pointers.
+- The site respects `prefers-reduced-motion`.
+
+---
+
+## Interactions
+
+- Custom cursor + magnetic buttons (fine pointers only).
+- Hero ghost numeral and title parallax.
+- Cursor-following city poster preview on the hero city index.
+- Scroll-reveal on sections/cards via `IntersectionObserver`.
+- Mobile menu with focus trap, Escape close, and body scroll lock.
+- FAQ accordions with single-open behaviour.
+- Reading progress bar and scrolled-header state.
+- Print/no-JS: the page still reads; reveal states fall back to visible.
+
+There is no live clock, form, tab switcher, or step scrollspy anymore.
 
 ---
 
@@ -100,8 +174,7 @@ noclue-site/
 ├── manifesto.html
 ├── partners.html
 ├── apply.html
-├── serve.py                  (local preview only — correct font MIME types)
-├── 404.html                  (optional — add on the host)
+├── serve.py
 ├── favicon.svg
 ├── apple-touch-icon.png
 ├── icon-192.png / icon-512.png
@@ -110,88 +183,70 @@ noclue-site/
 ├── sitemap.xml
 ├── assets/
 │   ├── css/
-│   │   ├── base.css          tokens, type, header, hero, footer
-│   │   ├── sections.css      section system, home components
-│   │   └── pages.css         subpage components + all responsive rules
-│   ├── js/site.js            vanilla JS, ~250 lines
-│   ├── fonts/                subset WOFF2 (Anton, Archivo, Instrument Serif, JetBrains Mono)
+│   │   └── campaign.css       one stylesheet for the whole site
+│   ├── js/
+│   │   └── site.js            vanilla interactions
+│   ├── fonts/                 self-hosted WOFF2
 │   └── img/
-│       ├── paper.jpg         generated paper texture (seamless mirror tile)
-│       ├── grain.png         generated film grain
-│       └── og.jpg            1200×630 social card
-└── tools/gen_assets.py       regenerates textures, social card and favicon
+│       ├── cities/            three 4:5 city poster images (placeholders)
+│       ├── paper.jpg          paper texture
+│       ├── grain.png          film grain
+│       └── og.jpg             1200×630 social card
+└── tools/
+    ├── gen_posters.py         regenerate city posters
+    └── gen_og.py              regenerate the social card
 ```
 
-### Design system
+---
 
-| Token | Value | Use |
-|---|---|---|
-| `--ink` | `#0a0a09` | base / dark sections |
-| `--paper` | `#f2eee4` | paper sections, primary buttons |
-| `--verm` | `#e33a1b` (`#c22f13` on paper) | accent, rules, stamps |
-| `--lime` | `#d9ff43` | live status only |
-| `--display` | Anton | headlines, city names, numbers |
-| `--serif` | Instrument Serif Italic | tension words, quotes, receipts |
-| `--sans` | Archivo | body |
-| `--mono` | JetBrains Mono | labels, metadata, buttons |
+## Deployment
 
-Grain sits above the whole page (`body::after`, soft-light). Paper sections use a generated
-seamless texture. Keep both subtle; they're what stop the black from feeling like a template.
+The repo includes a `vercel.json` that disables the framework build and serves the static
+files from the repo root:
 
-### Regenerating assets
-
-Fonts are subset from the OFL originals in `../realitycheck/fonts`:
-
-```bash
-pyftsubset ../../../realitycheck/fonts/Anton-Regular.ttf \
-  --output-file=../fonts/anton.woff2 --flavor=woff2 \
-  --unicodes="U+0000-00FF,U+0100-024F,U+2000-206F,..." --layout-features='*' --no-hinting
+```json
+{
+  "framework": null,
+  "buildCommand": "true",
+  "installCommand": "true",
+  "outputDirectory": "."
+}
 ```
 
-Textures / OG / favicon:
+Push to `main`; Vercel serves the static site. No environment variables are required.
 
-```bash
-cd tools
-python gen_assets.py
-```
+---
 
-Requires Pillow + numpy. The script renders the social card from the same typefaces as the
-site, so it stays on-brand.
+## Content notes
+
+- The three cities are **Delhi, Bangalore, and Pune** only. Mumbai is not part of this
+  series.
+- Delhi is positioned around enterprise/commercial adoption, not policy.
+- Hacker House is not presented as live or dated.
+- Solution Lab and Ventures are not presented as live offerings.
+- No member counts, past-event names, or invented proof are used.
+- Dates are not asserted on the site. City registration pages carry the latest details.
+- “~100 seats” and “full day 9–4” were removed because they were not re-confirmed for this
+  edition.
 
 ---
 
 ## Accessibility & performance
 
 - Semantic landmarks, one `<h1>` per page, skip link, visible focus rings.
-- Accordions use `aria-expanded` + `aria-controls`; tabs use the ARIA tabs pattern with
-  keyboard support; the mobile menu traps attention and closes on Escape.
-- Contrast: body copy and mono labels pass AA on both ink and paper. Accent red is used for
-  small labels at `#c22f13` on paper and `#e33a1b` on ink.
-- Fonts are self-hosted and subset: ~230 KB total. No third-party requests, no tracking.
-- Images: ~460 KB paper texture, ~100 KB grain, ~55 KB OG card. All local and cacheable.
-- The page works without JS; only reveal animations and interactive states need it.
-
----
-
-## Content notes
-
-- **Reality Check** uses the three-city structure from the brief: Delhi (*Pilot to Product*),
-  Bangalore (*Shipped Live*), Mumbai (*Breaking Point*). Delhi is positioned around
-  enterprise adoption — not policy.
-- **What comes next** (showcases, Domain × AI, cross-border, Hacker House) is presented as
-  direction. Hacker House has no date and says "in development."
-- **Solution Lab / Ventures** are intentionally not presented as live offerings. The
-  manifesto and FAQ only mention paid work as the long-term direction.
-- **Past events, member counts, stats** are omitted, as requested. They belong on a separate
-  page once the numbers and names are cleared for publication.
-- The application form's "what can you offer" field is optional; everything else matches the
-  content bank.
+- Mobile menu traps focus and closes on Escape.
+- FAQ uses native `<details>`/`<summary>` for no-JS behaviour.
+- Contrast: body copy passes AA on ink; paper sections use dark ink. Accent red is reserved
+  for labels/large type; lime is used on dark only.
+- Fonts are self-hosted and subset; no third-party requests, no tracking.
+- City poster placeholders are ~700 KB each. Replace with optimised JPG/WebP files if the
+  official posters are large.
+- The page works without JS; only reveal animations and pointer effects need it.
 
 ---
 
 ## Credits
 
 - Type: Anton, Archivo, Instrument Serif, JetBrains Mono — SIL Open Font License.
-- Textures, social card, and icons: generated in `tools/gen_assets.py`.
-- Copy: adapted from the noClue content bank; manifesto expanded from the supplied belief
-  statements.
+- Textures, city posters, social card, and icons: generated in `tools/`.
+- Copy: adapted from the noClue content bank and the Reality Check campaign brief.

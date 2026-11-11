@@ -1,421 +1,262 @@
 /* ==========================================================================
-   noClue — site.js
-   Vanilla, no dependencies. Progressive enhancement only.
+   noClue — Reality Check interactions
    ========================================================================== */
 
-(function () {
+(() => {
   "use strict";
 
-  var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
-  var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const doc = document.documentElement;
+  const head = document.getElementById("head");
+  const progress = document.getElementById("progressBar");
+  const menu = document.getElementById("menu");
+  const burger = document.querySelector(".burger");
+  const cursor = document.getElementById("cursor");
+  const preview = document.getElementById("cityPreview");
+  const previewTag = document.getElementById("cityPreviewTag");
+  const rows = Array.from(document.querySelectorAll(".city-row"));
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let lastFocus = null;
+  let frame = 0;
 
-  /* ------------------------------------------------------------------------
-     Header state + reading progress
-     ------------------------------------------------------------------------ */
+  // Let the hero reveal itself after first paint.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => doc.classList.add("is-ready"));
+  });
 
-  var head = $(".head");
-  var progress = $("#progressBar");
-  var queued = false;
+  // Header + reading progress.
+  const onScroll = () => {
+    const y = window.scrollY || 0;
+    if (head) head.classList.toggle("is-scrolled", y > 24);
 
-  function onScroll() {
-    if (queued) return;
-    queued = true;
-    window.requestAnimationFrame(function () {
-      var y = window.scrollY || window.pageYOffset;
-      if (head) head.classList.toggle("is-scrolled", y > 8);
-      if (progress) {
-        var max = document.documentElement.scrollHeight - window.innerHeight;
-        progress.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
-      }
-      queued = false;
-      updateStep();
-    });
-  }
-
+    if (progress) {
+      const max = doc.scrollHeight - window.innerHeight;
+      progress.style.width = max > 0 ? `${Math.min(100, (y / max) * 100)}%` : "0%";
+    }
+  };
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
   onScroll();
 
-  /* ------------------------------------------------------------------------
-     Mobile menu
-     ------------------------------------------------------------------------ */
-
-  var burger = $(".burger");
-  var menu = $("#menu");
-  var lastFocus = null;
-
-  function menuOpen() {
-    return menu && menu.classList.contains("is-open");
-  }
-
-  function setMenu(open) {
+  // Mobile menu.
+  const setMenu = (open) => {
     if (!menu || !burger) return;
     menu.classList.toggle("is-open", open);
     menu.setAttribute("aria-hidden", String(!open));
     burger.setAttribute("aria-expanded", String(open));
     burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     document.body.classList.toggle("is-locked", open);
-    if (head) head.classList.toggle("is-menu", open);
 
     if (open) {
       lastFocus = document.activeElement;
-      var first = $("a, button", menu);
-      if (first) window.setTimeout(function () { first.focus(); }, 80);
+      const first = menu.querySelector("a, button");
+      if (first) first.focus();
     } else if (lastFocus) {
       lastFocus.focus();
     }
-  }
+  };
 
   if (burger) {
-    burger.addEventListener("click", function () { setMenu(!menuOpen()); });
+    burger.addEventListener("click", () => {
+      setMenu(burger.getAttribute("aria-expanded") !== "true");
+    });
   }
+
   if (menu) {
-    $$("a", menu).forEach(function (a) {
-      a.addEventListener("click", function () { setMenu(false); });
-    });
-  }
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && menuOpen()) setMenu(false);
-  });
-
-  /* keep keyboard focus inside the fullscreen menu while it is open */
-  document.addEventListener("keydown", function (e) {
-    if (e.key !== "Tab" || !menuOpen()) return;
-    var focusables = $$('a[href], button:not([disabled])', menu);
-    if (!focusables.length) return;
-    var first = focusables[0];
-    var last = focusables[focusables.length - 1];
-    if (!menu.contains(document.activeElement)) {
-      e.preventDefault();
-      first.focus();
-    } else if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  });
-  var wide = window.matchMedia("(min-width: 981px)");
-  var onWide = function (e) { if (e.matches) setMenu(false); };
-  if (wide.addEventListener) wide.addEventListener("change", onWide);
-  else if (wide.addListener) wide.addListener(onWide);
-
-  /* ------------------------------------------------------------------------
-     Accordions
-     ------------------------------------------------------------------------ */
-
-  $$(".acc").forEach(function (acc) {
-    var items = $$(".acc__item", acc);
-    var single = acc.hasAttribute("data-single");
-
-    items.forEach(function (item) {
-      var btn = $("[data-acc]", item);
-      if (!btn) return;
-      btn.setAttribute("aria-expanded", String(item.classList.contains("is-open")));
-      btn.addEventListener("click", function () {
-        var nextOpen = !item.classList.contains("is-open");
-        if (single && nextOpen) {
-          items.forEach(function (other) {
-            if (other === item) return;
-            other.classList.remove("is-open");
-            var b = $("[data-acc]", other);
-            if (b) b.setAttribute("aria-expanded", "false");
-          });
-        }
-        item.classList.toggle("is-open", nextOpen);
-        btn.setAttribute("aria-expanded", String(nextOpen));
-      });
-    });
-  });
-
-  /* ------------------------------------------------------------------------
-     Tabs (city switcher)
-     ------------------------------------------------------------------------ */
-
-  $$("[role=tablist]").forEach(function (list) {
-    var tabs = $$("[role=tab]", list);
-    if (!tabs.length) return;
-    var panels = tabs.map(function (tab) {
-      return document.getElementById(tab.getAttribute("aria-controls"));
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setMenu(false));
     });
 
-    function select(index, moveFocus) {
-      tabs.forEach(function (tab, i) {
-        var active = i === index;
-        tab.setAttribute("aria-selected", String(active));
-        tab.tabIndex = active ? 0 : -1;
-        if (panels[i]) panels[i].hidden = !active;
-      });
-      if (moveFocus) tabs[index].focus();
-    }
+    document.addEventListener("keydown", (event) => {
+      if (!menu.classList.contains("is-open")) return;
 
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener("click", function () { select(i, false); });
-      tab.addEventListener("keydown", function (e) {
-        var next = null;
-        if (e.key === "ArrowDown" || e.key === "ArrowRight") next = (i + 1) % tabs.length;
-        else if (e.key === "ArrowUp" || e.key === "ArrowLeft") next = (i - 1 + tabs.length) % tabs.length;
-        else if (e.key === "Home") next = 0;
-        else if (e.key === "End") next = tabs.length - 1;
-        if (next !== null) {
-          e.preventDefault();
-          select(next, true);
-        }
-      });
-    });
-
-    var initial = Math.max(0, tabs.map(function (t) { return t.getAttribute("aria-selected"); }).indexOf("true"));
-    select(initial, false);
-  });
-
-  /* ------------------------------------------------------------------------
-     Reveal on scroll
-     ------------------------------------------------------------------------ */
-
-  /* ------------------------------------------------------------------------
-     Custom cursor + magnetic hover + hero parallax
-     ------------------------------------------------------------------------ */
-
-  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
-  if (finePointer && !reduceMotion) {
-    var cursorEl = document.createElement("div");
-    cursorEl.className = "cursor";
-    cursorEl.setAttribute("aria-hidden", "true");
-    var cursorDot = document.createElement("div");
-    cursorDot.className = "cursor__dot";
-    cursorDot.setAttribute("aria-hidden", "true");
-    document.body.appendChild(cursorEl);
-    document.body.appendChild(cursorDot);
-
-    if (cursorEl && cursorDot) {
-      document.documentElement.classList.add("has-cursor");
-
-      var cpos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-      var cring = { x: cpos.x, y: cpos.y };
-      var craf = 0;
-
-      function cursorTick() {
-        cring.x += (cpos.x - cring.x) * 0.16;
-        cring.y += (cpos.y - cring.y) * 0.16;
-        cursorEl.style.left = cring.x + "px";
-        cursorEl.style.top = cring.y + "px";
-        cursorDot.style.left = (cring.x - 3) + "px";
-        cursorDot.style.top = (cring.y - 3) + "px";
-        craf = window.requestAnimationFrame(cursorTick);
-      }
-      craf = window.requestAnimationFrame(cursorTick);
-
-      document.addEventListener("mousemove", function (e) {
-        cpos.x = e.clientX;
-        cpos.y = e.clientY;
-      }, { passive: true });
-
-      var HOVER_SELECTOR = "a[href], button, input, textarea, select, label, [data-cursor]";
-      function syncHover(target) {
-        var hoverable = target && target.closest ? target.closest(HOVER_SELECTOR) : null;
-        document.body.classList.toggle("cursor-hover", !!hoverable);
-      }
-      document.addEventListener("mouseover", function (e) { syncHover(e.target); });
-      document.addEventListener("mouseout", function (e) {
-        if (e.relatedTarget) return;
-        document.body.classList.remove("cursor-hover");
-      });
-
-      var hero = document.querySelector(".hero");
-      if (hero) {
-        document.addEventListener("mousemove", function (e) {
-          var r = hero.getBoundingClientRect();
-          var x = (e.clientX - r.left) / r.width - 0.5;
-          var y = (e.clientY - r.top) / r.height - 0.5;
-          hero.style.setProperty("--px", (x * -22) + "px");
-          hero.style.setProperty("--py", (y * -16) + "px");
-        }, { passive: true });
-      }
-    }
-  }
-
-  var MAGNET_SELECTORS = ".btn, .head__apply, .menu__nav a, .next-card, .aud-card, .tlink, .band .tlink, .foot__links a";
-  if (!reduceMotion) {
-    var magneticEls = document.querySelectorAll(MAGNET_SELECTORS);
-    Array.prototype.forEach.call(magneticEls, function (el) {
-      el.addEventListener("mousemove", function (e) {
-        var r = el.getBoundingClientRect();
-        var dx = e.clientX - (r.left + r.width * 0.5);
-        var dy = e.clientY - (r.top + r.height * 0.5);
-        el.style.transform = "translate(" + (dx * 0.22).toFixed(1) + "px," + (dy * 0.22).toFixed(1) + "px)";
-      });
-      el.addEventListener("mouseleave", function () { el.style.transform = ""; });
-    });
-  }
-
-  /* ------------------------------------------------------------------------
-     Reveal on scroll
-     ------------------------------------------------------------------------ */
-
-  var revealItems = $$("[data-reveal]");
-  if (!reduceMotion && "IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-in");
-        io.unobserve(entry.target);
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
-    revealItems.forEach(function (el) { io.observe(el); });
-  } else {
-    revealItems.forEach(function (el) { el.classList.add("is-in"); });
-  }
-
-  /* ------------------------------------------------------------------------
-     Steps scroll-spy
-     ------------------------------------------------------------------------ */
-
-  var steps = $$("[data-step]");
-  var stepLabel = $("[data-step-label]");
-
-  function updateStep() {
-    if (!steps || !steps.length) return;
-    var marker = window.innerHeight * 0.44;
-    var current = steps[0];
-    steps.forEach(function (step) {
-      if (step.getBoundingClientRect().top <= marker) current = step;
-    });
-    steps.forEach(function (step) {
-      step.classList.toggle("is-active", step === current);
-    });
-    if (stepLabel) stepLabel.textContent = current.getAttribute("data-index") || "01";
-  }
-
-  /* ------------------------------------------------------------------------
-     Clock — the room runs on IST
-     ------------------------------------------------------------------------ */
-
-  var clocks = $$("[data-clock]");
-  if (clocks.length) {
-    var clockFmt;
-    try {
-      clockFmt = new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Asia/Kolkata",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false
-      });
-    } catch (err) {
-      clockFmt = null;
-    }
-    var tickClock = function () {
-      var value = clockFmt ? clockFmt.format(new Date()) : "--:--";
-      clocks.forEach(function (el) { el.textContent = value; });
-    };
-    tickClock();
-    window.setInterval(tickClock, 30000);
-  }
-
-  /* ------------------------------------------------------------------------
-     Application form
-     ------------------------------------------------------------------------ */
-
-  var form = $("#applyForm");
-  if (form) {
-    var success = $("#applySuccess");
-    var required = $$("[data-required]", form);
-
-    function fieldOf(input) { return input.closest(".field"); }
-
-    function clearField(input) {
-      var field = fieldOf(input);
-      if (!field) return;
-      field.classList.remove("has-error");
-      input.removeAttribute("aria-invalid");
-      var err = $(".field__error", field);
-      if (err) err.textContent = "";
-    }
-
-    function markField(input, message) {
-      var field = fieldOf(input);
-      if (!field) return;
-      field.classList.add("has-error");
-      input.setAttribute("aria-invalid", "true");
-      var err = $(".field__error", field);
-      if (err) err.textContent = message;
-    }
-
-    required.forEach(function (input) {
-      input.addEventListener("input", function () { clearField(input); });
-      input.addEventListener("change", function () { clearField(input); });
-    });
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var firstInvalid = null;
-
-      required.forEach(function (input) {
-        clearField(input);
-        var value = (input.value || "").trim();
-
-        if (!value) {
-          if (!firstInvalid) firstInvalid = input;
-          markField(input, "This one is needed.");
-          return;
-        }
-
-        if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
-          if (!firstInvalid) firstInvalid = input;
-          markField(input, "That email doesn't look right.");
-        }
-      });
-
-      if (firstInvalid) {
-        firstInvalid.focus();
-        firstInvalid.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMenu(false);
         return;
       }
 
-      form.classList.add("is-sent");
-      if (success) {
-        success.classList.add("is-visible");
-        success.setAttribute("tabindex", "-1");
-        success.focus({ preventScroll: true });
-        success.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(
+        menu.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+      ).filter((el) => el.offsetParent !== null);
+
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     });
   }
 
-  /* ------------------------------------------------------------------------
-     Prefill city / role from a program link (?city=delhi, ?role=expert)
-     ------------------------------------------------------------------------ */
+  // Custom cursor.
+  if (cursor && finePointer) {
+    let cx = window.innerWidth / 2;
+    let cy = window.innerHeight / 2;
+    let tx = cx;
+    let ty = cy;
 
-  if (form) {
-    var params = new URLSearchParams(window.location.search);
-    var cityWanted = params.get("city");
-    var roleWanted = params.get("role");
-    var preselect = function (id, wanted) {
-      if (!wanted) return;
-      var select = document.getElementById(id);
-      if (!select) return;
-      var options = select.options;
-      for (var i = 0; i < options.length; i += 1) {
-        if (options[i].value.toLowerCase() === wanted.toLowerCase()) {
-          select.value = options[i].value;
-          break;
-        }
-      }
+    const drawCursor = () => {
+      cx += (tx - cx) * 0.22;
+      cy += (ty - cy) * 0.22;
+      cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%)`;
+      frame = requestAnimationFrame(drawCursor);
     };
-    preselect("city", cityWanted);
-    preselect("role", roleWanted);
+
+    window.addEventListener(
+      "pointermove",
+      (event) => {
+        tx = event.clientX;
+        ty = event.clientY;
+        cursor.classList.add("is-on");
+        if (!frame) frame = requestAnimationFrame(drawCursor);
+      },
+      { passive: true }
+    );
+
+    document.addEventListener("pointerover", (event) => {
+      const target = event.target instanceof Element ? event.target.closest("a, button, summary, .poster, .city-row") : null;
+      cursor.classList.toggle("is-hover", Boolean(target));
+    });
+
+    document.addEventListener("pointerleave", () => cursor.classList.remove("is-on"));
   }
 
-  /* ------------------------------------------------------------------------
-     Nice-to-have: external links open in a new tab
-     ------------------------------------------------------------------------ */
+  // City preview follows the pointer while a city row is hovered.
+  if (preview && finePointer && !reduceMotion) {
+    let px = 0;
+    let py = 0;
+    let current = null;
+    let previewFrame = 0;
 
-  $$('a[href^="http"]').forEach(function (a) {
-    if (a.hostname && a.hostname !== window.location.hostname) {
-      a.setAttribute("target", "_blank");
-      a.setAttribute("rel", "noopener noreferrer");
-    }
+    const movePreview = () => {
+      preview.style.left = `${px}px`;
+      preview.style.top = `${py}px`;
+      previewFrame = 0;
+    };
+
+    const showPreview = (row, event) => {
+      const city = row.dataset.city;
+      if (!city) return;
+      current = city;
+      px = event.clientX;
+      py = event.clientY;
+      if (!previewFrame) previewFrame = requestAnimationFrame(movePreview);
+
+      preview.querySelectorAll("img").forEach((img) => {
+        img.classList.toggle("is-on", img.dataset.preview === city);
+      });
+      if (previewTag) {
+        const names = { delhi: "Delhi / 01", bangalore: "Bangalore / 02", pune: "Pune / 03" };
+        previewTag.textContent = names[city] || city;
+      }
+      preview.classList.add("is-on");
+    };
+
+    rows.forEach((row) => {
+      row.addEventListener("pointerenter", (event) => showPreview(row, event));
+      row.addEventListener("pointermove", (event) => {
+        if (current !== row.dataset.city) return;
+        px = event.clientX;
+        py = event.clientY;
+        if (!previewFrame) previewFrame = requestAnimationFrame(movePreview);
+      });
+      row.addEventListener("pointerleave", () => {
+        current = null;
+        preview.classList.remove("is-on");
+      });
+    });
+  }
+
+  // Subtle hero parallax.
+  const hero = document.querySelector(".hero");
+  const ghost = document.querySelector(".hero__ghost");
+  const heroTitle = document.querySelector(".hero__title");
+
+  if (hero && finePointer && !reduceMotion) {
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let heroFrame = 0;
+
+    const animateHero = () => {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      if (ghost) ghost.style.transform = `translate3d(${currentX * 10}px, calc(-51% + ${currentY * 8}px), 0)`;
+      if (heroTitle) heroTitle.style.transform = `translate3d(${currentX * 3}px, ${currentY * 3}px, 0)`;
+      heroFrame = requestAnimationFrame(animateHero);
+    };
+
+    hero.addEventListener(
+      "pointermove",
+      (event) => {
+        const rect = hero.getBoundingClientRect();
+        targetX = (event.clientX - rect.left) / rect.width - 0.5;
+        targetY = (event.clientY - rect.top) / rect.height - 0.5;
+        if (!heroFrame) heroFrame = requestAnimationFrame(animateHero);
+      },
+      { passive: true }
+    );
+
+    hero.addEventListener("pointerleave", () => {
+      targetX = 0;
+      targetY = 0;
+    });
+  }
+
+  // Magnetic primary buttons.
+  if (finePointer && !reduceMotion) {
+    document.querySelectorAll(".btn").forEach((button) => {
+      button.addEventListener("pointermove", (event) => {
+        const rect = button.getBoundingClientRect();
+        const x = event.clientX - rect.left - rect.width / 2;
+        const y = event.clientY - rect.top - rect.height / 2;
+        button.style.transform = `translate(${x * 0.12}px, ${y * 0.18}px)`;
+      });
+      button.addEventListener("pointerleave", () => {
+        button.style.transform = "";
+      });
+    });
+  }
+
+  // Reveal on scroll.
+  const revealItems = document.querySelectorAll("[data-reveal]");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-in");
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+    );
+    revealItems.forEach((item) => observer.observe(item));
+  } else {
+    revealItems.forEach((item) => item.classList.add("is-in"));
+  }
+
+  // Keep only one FAQ answer open at a time for a cleaner read.
+  const faqItems = Array.from(document.querySelectorAll(".faq__item"));
+  faqItems.forEach((item) => {
+    item.addEventListener("toggle", () => {
+      if (!item.open) return;
+      faqItems.forEach((other) => {
+        if (other !== item) other.open = false;
+      });
+    });
+  });
+
+  // Quietly keep the footer year current.
+  const year = new Date().getFullYear();
+  document.querySelectorAll("[data-year]").forEach((el) => {
+    el.textContent = String(year);
   });
 })();

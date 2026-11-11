@@ -1,13 +1,21 @@
 {
   "name": "noClue",
   "short_name": "noClue",
-  "description": "A curated network of AI builders, founders, and domain experts.",
+  "description": "Reality Check \u2014 a three-city series by noClue. Delhi, Bangalore, Pune.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a09",
   "theme_color": "#0a0a09",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
