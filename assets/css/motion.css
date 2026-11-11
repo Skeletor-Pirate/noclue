@@ -307,3 +307,28 @@ html:not(.js) .intro{display:none}
   .totop{display:none}
   .menu__nav a,.menu__foot{opacity:1;transform:none}
 }
+
+/* --------------------------------------------------------------------------
+   Metro running along the deck skyline
+   -------------------------------------------------------------------------- */
+.hero__skyline{position:relative;overflow:hidden}
+.hero__metro{
+  position:absolute;left:-88px;bottom:29%;
+  width:88px;height:18px;
+  background:
+    repeating-linear-gradient(90deg,var(--paper) 0 6px,transparent 6px 13px) 0 6px/100% 6px no-repeat,
+    var(--blue);
+  box-shadow:0 -4px 0 0 var(--ink),0 0 0 2px rgba(11,11,11,.55);
+  animation:metro-run 34s linear infinite;
+  will-change:transform;
+}
+.hero__metro::after{
+  content:"";position:absolute;left:3px;right:3px;top:-4px;height:4px;background:var(--ink);
+}
+@keyframes metro-run{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(calc(100vw + 160px),0,0)}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero__metro{animation:none;display:none}
+}

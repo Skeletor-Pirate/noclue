@@ -155,6 +155,7 @@ Everything below is optional chrome — the page is fully readable with JS off.
 | Velocity ticker | The marquee reacts to scroll speed |
 | Cursor states | Contextual labels (`Apply`, `Partner`, `View`) on a shrinking blue pixel |
 | Pixel button fill | Buttons fill with a checkerboard pixel grid on hover |
+| Metro | A pixel train runs along the bridge in the hero skyline band |
 | Nav hover swap | Nav labels roll up and a blue duplicate rolls in |
 | Count-up | The `03` city counter counts up when it enters the viewport |
 | FAQ height | Answers animate open/closed instead of snapping |
@@ -196,12 +197,18 @@ noclue-site/
 │       ├── cities/
 │       ├── partners/
 │       ├── grain.png
-│       └── og.jpg
+│       └── og*.jpg           per-page social cards
 └── .gitignore
 ```
 
 `incoming/` is ignored. It is only used by the local upload helper when source assets are
 being dropped into Termux.
+
+Social cards are regenerated with:
+
+```bash
+python tools/gen_og.py
+```
 
 ---
 
@@ -234,15 +241,43 @@ The site is static. On Vercel, use:
 
 ## Content notes
 
-- The three cities are **Delhi, Bangalore, and Pune** only. Mumbai is not part of this
-  series.
+Copy follows the **Reality Check Website: Content and Implementation Brief** (v1).
+
+### Published facts (from the brief, section 2)
+
+- Day format: check-in from 9:00 AM, opening at 10:00 AM, finish at 4:00 PM.
+- About 100 curated seats per city (a target, not a guarantee).
+- Devlution, July 2024 — 683 attendees.
+- noClue community — 1,477 members.
+- Delhi on Commudle. Bangalore and Pune on GoAvo.
+- Contact: hello@noclue.co
+
+### Held back until noClue confirms
+
+These blocks exist in the markup as HTML comments and are **not published**, per the
+brief's rule that a block containing a `[BRACKET]` stays hidden:
+
+- Per-city date and venue lines on the series cards.
+- The full Delhi and Pune agendas.
+- The name of the product built in Bangalore.
+- The three city talk forms (Delhi, Bangalore, Pune) and their links.
+- Ticket price, food, filming policy, and ownership of what attendees build (FAQ).
+- The two Hack-Nation India rows (182 and 127 attendees) and the credit wording
+  “noClue ran the India hub editions”, pending confirmation with Hack-Nation.
+- The after-event reporting commitment on the partners page.
+- The partner brochure link.
+
+### Other rules applied
+
+- The three cities are **Delhi, Bangalore, and Pune** only. Mumbai appears nowhere.
+- “Applications open” and “Apply” everywhere. Never “Register” or “Registration open”.
+- Attendance is curated. Every seat is reviewed by the city's City Lead.
+- The nav Apply button opens `apply.html` on every page.
+- No invented numbers, names, quotes, dates, venues or prices.
+- Partner wall order: series, city, ecosystem, platform, community.
 - Delhi is positioned around enterprise/commercial adoption, not policy.
 - Hacker House is not presented as live or dated.
 - Solution Lab and Ventures are not presented as live offerings.
-- No member counts, past-event names, or invented proof are used.
-- Dates are not asserted beyond the deck's “November 2026” series window. City
-  registration pages carry the latest details.
-- “~100 seats” and “full day 9–4” are not used.
 
 ---
 
