@@ -271,7 +271,7 @@ with the owner's later instructions applied on top (contact email, speaker mailt
 - About 100 curated seats per city (a target, not a guarantee).
 - Devlution, July 2024 — 683 attendees.
 - Two AI hackathon editions, April and July 2026 — 309 attendees in total (182 and 127).
-- noClue network — 1,477 members. noClue is a network, never a “community”.
+- noClue network — 1,600+ members. noClue is a network, never a “community”.
 - Contact: build.noclue@gmail.com
 
 ### Held back until noClue confirms
