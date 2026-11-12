@@ -428,14 +428,41 @@
       ".apply-list",
     ].join(", ");
 
+    const added = [];
+
     doc.querySelectorAll(groups).forEach((group) => {
       Array.from(group.children).forEach((child, index) => {
-        if (!child.hasAttribute("data-reveal")) child.setAttribute("data-reveal", "");
+        if (!child.hasAttribute("data-reveal")) {
+          child.setAttribute("data-reveal", "");
+          added.push(child);
+        }
         if (!child.style.getPropertyValue("--d")) {
           child.style.setProperty("--d", (index * 0.07).toFixed(2) + "s");
         }
       });
     });
+
+    if (!added.length) return;
+
+    // site.js snapshots [data-reveal] before this runs, so items tagged here
+    // would never be observed and would sit at opacity 0. Watch them here.
+    if (reduce || !("IntersectionObserver" in window)) {
+      added.forEach((el) => el.classList.add("is-in"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-in");
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+    );
+
+    added.forEach((el) => observer.observe(el));
   }
 
   /* --------------------------------------------------- pinned city track */
