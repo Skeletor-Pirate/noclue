@@ -87,12 +87,16 @@ apple-touch-icon.png                        180×180 touch icon
 
 The skyline strip is the deck's own artwork, re-rendered at 200 dpi.
 
-- **Desktop / tablet**: the band is scaled (120–130%) and centred, so Delhi, Bangalore and
-  Pune are all in frame at once.
-- **Phone**: the band becomes a 190%-wide panorama that pans Delhi → Bangalore → Pune and
-  back, so every city gets its own moment instead of one cropped frame.
-- The metro sprite lives inside the same wrapper, so the train always sits exactly on the
-  rail and runs the full length of the line, looping continuously with no dead stop.
+- **Desktop / tablet**: the band is scaled (120–130%) and centred, so Delhi,
+  Bangalore and Pune are all in frame at once.
+- **Phone**: the band holds on one city at a time at ~3.4× so the landmark fills
+  the screen — Delhi, then Bangalore, then Pune, easing between each shot on a
+  38 s loop. No more wide panorama squeezed into a phone-width strip.
+- The metro sprite lives inside the same wrapper, so the train always sits on the
+  rail, follows the shot as it slides, and loops without a stop.
+
+CSS and JS are linked with a `?v=` stamp so phones pick up new builds instead of
+serving a cached stylesheet.
 
 ### City posters
 
