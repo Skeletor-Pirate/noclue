@@ -258,31 +258,42 @@ The site is static. On Vercel, use:
 
 ## Content notes
 
-Copy follows the **Reality Check Website: Content and Implementation Brief** (v1).
+Copy follows the **Reality Check Website: Content and Implementation Brief** (v2),
+with the owner's later instructions applied on top (contact email, speaker mailto).
 
 ### Published facts (from the brief, section 2)
 
+- Delhi — **Sunday 29 November 2026**, Paytm office.
+- Bangalore — **Sunday 6 December 2026**, Paytm office.
+- Pune — **Friday 4 December 2026**, venue to be revealed.
+- Free to attend. Lunch and refreshments are provided by the noClue team.
 - Day format: check-in from 9:00 AM, opening at 10:00 AM, finish at 4:00 PM.
 - About 100 curated seats per city (a target, not a guarantee).
 - Devlution, July 2024 — 683 attendees.
-- noClue community — 1,477 members.
-- Delhi on Commudle. Bangalore and Pune on GoAvo.
-- Contact: hello@noclue.co
+- Two AI hackathon editions, April and July 2026 — 309 attendees in total (182 and 127).
+- noClue network — 1,477 members. noClue is a network, never a “community”.
+- Contact: build.noclue@gmail.com
 
 ### Held back until noClue confirms
 
 These blocks exist in the markup as HTML comments and are **not published**, per the
 brief's rule that a block containing a `[BRACKET]` stays hidden:
 
-- Per-city date and venue lines on the series cards.
 - The full Delhi and Pune agendas.
 - The name of the product built in Bangalore.
-- The three city talk forms (Delhi, Bangalore, Pune) and their links.
-- Ticket price, food, filming policy, and ownership of what attendees build (FAQ).
-- The two Hack-Nation India rows (182 and 127 attendees) and the credit wording
-  “noClue ran the India hub editions”, pending confirmation with Hack-Nation.
-- The after-event reporting commitment on the partners page.
+- Ownership of what attendees build, and the filming policy (FAQ).
 - The partner brochure link.
+
+City talk submissions and speaker pitches are handled by a prefilled mailto to
+`build.noclue@gmail.com`, so no unpublished bracket form is linked.
+
+### Deliberately absent
+
+- The registration platform names are never written in copy; Apply buttons link
+  straight to the application pages and differ per city.
+- No Mumbai, no invented stats, no unnamed “past partners”.
+- The hackathon name is not written; the track record only states the two editions
+  and their combined attendance.
 
 ### Other rules applied
 
