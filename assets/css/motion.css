@@ -318,7 +318,11 @@ html:not(.js) .intro{display:none}
 .hero__skyline{position:relative;overflow:hidden}
 /* The band is scaled up so the cityscape and the metro read larger.
    The wrapper keeps the sprite locked to the artwork when it scales. */
-.hero__skyline-scale{position:relative;width:116%;margin-left:-8%}
+.hero__skyline-scale{position:relative;width:120%;margin-left:-10%}
+@media (max-width:1200px){.hero__skyline-scale{width:134%;margin-left:-17%}}
+@media (max-width:980px){.hero__skyline-scale{width:158%;margin-left:-29%}}
+@media (max-width:700px){.hero__skyline-scale{width:200%;margin-left:-50%}}
+@media (max-width:480px){.hero__skyline-scale{width:250%;margin-left:-75%}}
 .hero__skyline-scale img{display:block;width:100%;height:auto}
 .hero__metro{
   position:absolute;left:0;top:61.8%;
@@ -338,9 +342,9 @@ html:not(.js) .intro{display:none}
   filter:blur(3px);opacity:.28;transform:translateX(-1.4%);
 }
 @keyframes metro-run{
-  0%{transform:translate3d(-32%,0,0)}
-  56%{transform:translate3d(112%,0,0)}
-  100%{transform:translate3d(112%,0,0)}
+  0%{transform:translate3d(-40%,0,0)}
+  58%{transform:translate3d(412%,0,0)}
+  100%{transform:translate3d(412%,0,0)}
 }
 @keyframes metro-bob{
   from{transform:translateY(0)}

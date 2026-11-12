@@ -83,6 +83,13 @@ icon-192.png / icon-512.png                 PWA icons
 apple-touch-icon.png                        180×180 touch icon
 ```
 
+### The hero band
+
+The skyline strip is the deck's own artwork, re-rendered at 200 dpi. It scales with the
+viewport (120% on desktop up to 250% on small phones) so the cityscape reads at a useful
+size, and the metro sprite is locked to the artwork inside the same wrapper, so the train
+always sits on the rail.
+
 ### City posters
 
 ```
@@ -156,7 +163,7 @@ Everything below is optional chrome — the page is fully readable with JS off.
 | Velocity ticker | The marquee reacts to scroll speed |
 | Cursor states | Contextual labels (`Apply`, `Partner`, `View`) on a shrinking blue pixel |
 | Pixel button fill | Buttons fill with a checkerboard pixel grid on hover |
-| Metro | The real metro train from the deck artwork runs along the viaduct in the hero band |
+| Metro | The real metro train from the deck artwork runs the length of the hero band |
 | Nav hover swap | Nav labels roll up and a blue duplicate rolls in |
 | Count-up | The `03` city counter counts up when it enters the viewport |
 | FAQ height | Answers animate open/closed instead of snapping |
