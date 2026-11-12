@@ -92,6 +92,21 @@ for (const page of pages) {
     }
   });
 
+  // Click-to-play film
+  if (page === "index.html") {
+    const play = doc.querySelector(".film__play[data-video]");
+    if (!play) fail("missing film play button");
+    else {
+      play.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+      const embed = doc.querySelector(".film__embed iframe");
+      if (!embed) fail("film did not swap in an iframe");
+      else {
+        if (!/youtube-nocookie\.com\/embed\/3YC5bxybglg/.test(embed.getAttribute("src") || "")) fail("film iframe src wrong");
+        if (!embed.hasAttribute("allowfullscreen")) fail("film iframe not fullscreenable");
+      }
+    }
+  }
+
   // Counter
   const counter = doc.querySelector("[data-count]");
   if (counter && !counter.getAttribute("data-count")) fail("counter missing value");

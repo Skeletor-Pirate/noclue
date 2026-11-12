@@ -77,6 +77,7 @@ assets/img/brand/noclue-black.png          trimmed noClue wordmark
 assets/img/brand/noclue-white.png          trimmed white noClue wordmark
 assets/img/brand/skyline.jpg               city skyline strip from the deck (train lifted out)
 assets/img/brand/metro.png                 the deck's metro train, lifted out as a sprite
+assets/img/brand/film-poster.jpg           1280x720 poster for the 22-second film
 assets/img/og.jpg                          1200×630 social card
 favicon.svg                                 cream/blue pixel favicon
 icon-192.png / icon-512.png                 PWA icons
@@ -153,6 +154,7 @@ The old Anton/Instrument Serif files were removed with the previous visual syste
 - Scroll-reveal via `IntersectionObserver`.
 - Mobile menu with focus trap, Escape close, and body scroll lock.
 - FAQ accordions with single-open behaviour.
+- Click-to-play film: the YouTube player is only loaded after the play button is pressed.
 - Reading progress bar.
 - Print/no-JS: content is visible without reveal animations.
 
@@ -273,6 +275,8 @@ with the owner's later instructions applied on top (contact email, speaker mailt
 - Two AI hackathon editions, April and July 2026 — 309 attendees in total (182 and 127).
 - noClue network — 1,600+ members. noClue is a network, never a “community”.
 - Contact: build.noclue@gmail.com
+- Film: [RealityCheck: The AI event for people who've actually shipped](https://www.youtube.com/watch?v=3YC5bxybglg),
+  22 seconds, click-to-play on the home page (no third-party request until played).
 
 ### Held back until noClue confirms
 

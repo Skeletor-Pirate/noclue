@@ -1139,3 +1139,66 @@ html:not(.js) [data-reveal]{opacity:1;transform:none}
   .band__links{width:100%;gap:8px 18px}
   .band__links a{font-size:9px}
 }
+
+/* --------------------------------------------------------------------------
+   The film: a click-to-play interlude between the premise and the cities
+   -------------------------------------------------------------------------- */
+.film{background:var(--ink);color:var(--paper);overflow:hidden}
+.film .section__label{color:rgba(244,241,231,.58)}
+.film .section__label::before{background:var(--blue)}
+.film__grid{
+  display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+  gap:clamp(26px,4.5vw,64px);align-items:center;
+}
+.film__title{
+  margin:16px 0 0;font-size:clamp(2rem,3.5vw,3.3rem);font-weight:900;
+  line-height:.94;letter-spacing:-.055em;
+}
+.film__title .serif{display:block;color:#5d7cff}
+.film__note{
+  margin:20px 0 0;max-width:42ch;font-size:.98rem;line-height:1.5;
+  color:rgba(244,241,231,.62);
+}
+.film__frame{
+  position:relative;aspect-ratio:16/9;background:#000;
+  border:1px solid rgba(244,241,231,.2);
+  box-shadow:12px 12px 0 rgba(4,71,255,.9);
+}
+.film__play{
+  position:absolute;inset:0;display:block;width:100%;height:100%;margin:0;
+  padding:0;border:0;background:#000;cursor:pointer;overflow:hidden;
+  clip-path:polygon(0 10px,10px 10px,10px 0,calc(100% - 10px) 0,calc(100% - 10px) 10px,100% 10px,100% calc(100% - 10px),calc(100% - 10px) calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,10px calc(100% - 10px),0 calc(100% - 10px));
+}
+.film__play img{
+  display:block;width:100%;height:100%;object-fit:cover;opacity:.82;
+  transition:opacity .4s ease,transform .8s var(--ease-out);
+}
+.film__play:hover img,.film__play:focus-visible img{opacity:1;transform:scale(1.015)}
+.film__cta{
+  position:absolute;left:50%;top:50%;width:78px;height:78px;margin:-39px 0 0 -39px;
+  display:grid;place-items:center;background:var(--blue);color:#fff;
+  transition:transform .25s var(--ease-out),background .25s ease;
+}
+.film__cta svg{width:26px;height:26px;margin-left:4px}
+.film__play:hover .film__cta,.film__play:focus-visible .film__cta{transform:scale(1.07);background:#2f63ff}
+.film__tag{
+  position:absolute;left:16px;bottom:14px;padding:5px 8px;
+  background:rgba(11,11,11,.6);color:rgba(244,241,231,.78);
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+}
+.film__embed{position:absolute;inset:0}
+.film__embed iframe{display:block;width:100%;height:100%;border:0}
+.film__nojs{margin:12px 0 0;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.film__nojs a{border-bottom:1px solid currentColor}
+
+@media (max-width:980px){
+  .film__grid{grid-template-columns:1fr;gap:26px}
+  .film__note{max-width:52ch}
+}
+@media (max-width:520px){
+  .film__frame{box-shadow:7px 7px 0 rgba(4,71,255,.9)}
+  .film__cta{width:60px;height:60px;margin:-30px 0 0 -30px}
+  .film__cta svg{width:20px;height:20px}
+  .film__tag{left:10px;bottom:10px;font-size:8px}
+  .film__title{font-size:clamp(1.9rem,8vw,2.6rem)}
+}

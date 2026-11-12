@@ -257,6 +257,27 @@
     });
   });
 
+  // Click-to-play film: no third-party player until the visitor asks for it.
+  document.querySelectorAll("[data-video]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-video");
+      if (!id) return;
+      const holder = document.createElement("div");
+      holder.className = "film__embed";
+      const frame = document.createElement("iframe");
+      frame.src =
+        "https://www.youtube-nocookie.com/embed/" +
+        encodeURIComponent(id) +
+        "?autoplay=1&rel=0&playsinline=1";
+      frame.title = button.getAttribute("aria-label") || "Reality Check film";
+      frame.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      frame.allowFullscreen = true;
+      holder.appendChild(frame);
+      button.replaceWith(holder);
+    });
+  });
+
   // Quietly keep the footer year current.
   const year = new Date().getFullYear();
   document.querySelectorAll("[data-year]").forEach((el) => {
