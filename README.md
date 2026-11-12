@@ -85,18 +85,19 @@ apple-touch-icon.png                        180×180 touch icon
 
 ### The hero band
 
-The skyline strip is the deck's own artwork, re-rendered at 200 dpi.
+The strip is the deck's own cityscape, cut straight from the artwork embedded in
+the PDF (a 1672x941 JPEG) instead of being re-rendered at 200 dpi and upscaled
+2.8x. That upscale was the source of the softness; the shipped file is now a 2x
+crop of the native pixels with the deck's leftover copy and the baked-in train
+painted out.
 
 - **Desktop / tablet**: the band is scaled (120–130%) and centred, so Delhi,
   Bangalore and Pune are all in frame at once.
-- **Phone**: the band holds on one city at a time at ~3.4× so the landmark fills
-  the screen — Delhi, then Bangalore, then Pune, easing between each shot on a
-  38 s loop. No more wide panorama squeezed into a phone-width strip.
-- The metro sprite lives inside the same wrapper, so the train always sits on the
-  rail, follows the shot as it slides, and loops without a stop.
-
-CSS and JS are linked with a `?v=` stamp so phones pick up new builds instead of
-serving a cached stylesheet.
+- **≤980px**: the band holds on one city at a time, with the India Gate, Vidhana
+  Soudha and the Pune arch each dead centre, easing between shots on a 38 s loop.
+- The metro sprite is measured against the artwork (28.2% of the band, 61.3% from
+  the top) so it sits exactly on the rail, and it runs on the same 38 s clock as
+  the scene change, so it drifts through each city as that city holds.
 
 ### City posters
 
