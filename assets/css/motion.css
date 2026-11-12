@@ -314,37 +314,62 @@ html:not(.js) .intro{display:none}
    The sprite is the real Namma Metro train lifted out of the supplied deck
    artwork (assets/img/brand/metro.png). The train was removed from the
    skyline band itself, so there is only ever one train on the viaduct.
+
+   --s is how much the band is scaled. The train rides inside the same
+   wrapper, so it always sits on the rail and always runs the full length
+   of the line, looping without a stop.
    -------------------------------------------------------------------------- */
 .hero__skyline{position:relative;overflow:hidden}
-/* The band is scaled up so the cityscape and the metro read larger.
-   The wrapper keeps the sprite locked to the artwork when it scales. */
-.hero__skyline-scale{position:relative;width:120%;margin-left:-10%}
-@media (max-width:1200px){.hero__skyline-scale{width:134%;margin-left:-17%}}
-@media (max-width:980px){.hero__skyline-scale{width:158%;margin-left:-29%}}
-@media (max-width:700px){.hero__skyline-scale{width:200%;margin-left:-50%}}
-@media (max-width:480px){.hero__skyline-scale{width:250%;margin-left:-75%}}
+
+.hero__skyline-scale{
+  --s:1.2;
+  --pan:calc((1 - (1 / var(--s))) * -100%);
+  position:relative;
+  width:calc(var(--s) * 100%);
+  margin-left:calc((1 - var(--s)) * 50%);
+}
 .hero__skyline-scale img{display:block;width:100%;height:auto}
+
+@media (max-width:1200px){.hero__skyline-scale{--s:1.3}}
+@media (max-width:980px){.hero__skyline-scale{--s:1.12}}
+
+/* Phones: the band becomes a panorama that pans Delhi -> Pune and back,
+   so every city gets its moment instead of one cropped frame. */
+@media (max-width:700px){
+  .hero__skyline-scale{
+    --s:1.9;
+    margin-left:0;
+    animation:pan-cities 44s cubic-bezier(.62,0,.38,1) infinite;
+  }
+}
+@keyframes pan-cities{
+  0%,24%{transform:translate3d(0,0,0)}
+  42%,70%{transform:translate3d(var(--pan),0,0)}
+  88%,100%{transform:translate3d(0,0,0)}
+}
+
 .hero__metro{
   position:absolute;left:0;top:61.8%;
-  width:26.83%;
-  animation:metro-run 32s linear infinite;
+  width:calc(26.83 * var(--s) * 1vw);
+  height:0;
+  animation:metro-run 22s linear infinite;
   will-change:transform;
 }
 .hero__metro i{
-  display:block;width:100%;aspect-ratio:1246 / 83;
+  position:absolute;top:0;left:0;display:block;
+  width:100%;aspect-ratio:1246 / 83;
   background:url("../img/brand/metro.png") no-repeat center / 100% 100%;
-  animation:metro-bob 1.7s ease-in-out infinite alternate;
   filter:drop-shadow(0 4px 3px rgba(11,11,11,.45));
+  animation:metro-bob 1.7s ease-in-out infinite alternate;
 }
-.hero__metro::before{
+.hero__metro i::before{
   content:"";position:absolute;inset:0;
   background:url("../img/brand/metro.png") no-repeat center / 100% 100%;
-  filter:blur(3px);opacity:.28;transform:translateX(-1.4%);
+  filter:blur(3px);opacity:.26;transform:translateX(-1.4%);
 }
 @keyframes metro-run{
-  0%{transform:translate3d(-40%,0,0)}
-  58%{transform:translate3d(412%,0,0)}
-  100%{transform:translate3d(412%,0,0)}
+  from{transform:translate3d(calc(-12 * var(--s) * 1vw),0,0)}
+  to{transform:translate3d(calc(112 * var(--s) * 1vw),0,0)}
 }
 @keyframes metro-bob{
   from{transform:translateY(0)}
@@ -352,4 +377,5 @@ html:not(.js) .intro{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .hero__metro{animation:none;display:none}
+  .hero__skyline-scale{animation:none}
 }
