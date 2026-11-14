@@ -248,13 +248,21 @@ The site is static. On Vercel, use:
 
 ### Go-live checklist
 
-- Vercel production was previously protected by **Vercel Authentication (SSO)**. Disable
-  Deployment Protection for the production environment in Vercel → Project → Settings →
-  Deployment Protection, or the public will be bounced to a Vercel login.
-- `noclue.co` previously resolved to a **Squarespace “Domain Not Claimed”** page. Add
-  `noclue.co` to the Vercel project and point DNS at Vercel before sharing the canonical
-  URL.
-- Until both are done, use a Vercel deployment URL from the dashboard for review.
+- **Live domain: `buildwithnoclue.dev`** (DNS at name.com). Both `buildwithnoclue.dev`
+  and `www.buildwithnoclue.dev` are attached to the Vercel project `noclue`.
+- Add these records at name.com:
+
+  | Type | Host | Answer | TTL |
+  |---|---|---|---|
+  | A | *(blank = apex)* | `76.76.21.21` | 300 |
+  | CNAME | `www` | `cname.vercel-dns.com` | 300 |
+
+- `.dev` is on the HSTS preload list, so the domain only serves over https.
+- Vercel Authentication (SSO) protection is set to *all except custom domains*, so
+  `buildwithnoclue.dev` is public while the auto-generated `*.vercel.app` alias still
+  asks for a login. `https://noclue-five.vercel.app` is also public and safe to share.
+- The project auto-deploys `main` of `Skeletor-Pirate/noclue`; the same history is
+  mirrored to `abhinav-nautiyal/noClue-Reality-Check`.
 
 ---
 

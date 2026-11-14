@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://noclue.co/sitemap.xml
+Sitemap: https://buildwithnoclue.dev/sitemap.xml
