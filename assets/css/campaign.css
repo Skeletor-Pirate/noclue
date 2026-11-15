@@ -49,7 +49,7 @@ body::before{
   z-index:9998;
   pointer-events:none;
   opacity:.025;
-  background-image:url("../img/grain.png");
+  background-image:url("../img/grain.webp");
   background-size:280px 280px;
   mix-blend-mode:multiply;
 }
@@ -980,10 +980,10 @@ html:not(.js) [data-reveal]{opacity:1;transform:none}
 /* Track record */
 .track__table{border-top:1px solid var(--ink)}
 .track__row{
-  display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:20px;align-items:baseline;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:baseline;
   padding:18px 12px;border-bottom:1px solid var(--line-mid);
 }
-.track__row span:last-child{text-align:right;font-family:var(--mono);font-size:1rem;font-weight:600}
+.track__row span:last-child{text-align:right;font-family:var(--mono);font-size:1rem;font-weight:600;white-space:nowrap}
 .track__row--head span{
   font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.16em;
   text-transform:uppercase;color:var(--muted);
@@ -1065,7 +1065,7 @@ html:not(.js) [data-reveal]{opacity:1;transform:none}
   .room__grid{grid-template-columns:1fr}
   .selection__steps{grid-template-columns:1fr 1fr}
   .perks{grid-template-columns:1fr 1fr}
-  .track__row{grid-template-columns:minmax(0,1fr) 120px}
+  .track__row{grid-template-columns:minmax(0,1fr) auto}
 }
 @media (max-width:700px){
   .selection__steps{grid-template-columns:1fr}
@@ -1136,7 +1136,7 @@ html:not(.js) [data-reveal]{opacity:1;transform:none}
 }
 .film__play:hover img,.film__play:focus-visible img{opacity:1;transform:scale(1.015)}
 .film__cta{
-  position:absolute;left:50%;top:50%;width:78px;height:78px;margin:-39px 0 0 -39px;
+  position:absolute;right:16px;bottom:14px;width:68px;height:68px;
   display:grid;place-items:center;background:var(--blue);color:#fff;
   transition:transform .25s var(--ease-out),background .25s ease;
 }
@@ -1158,7 +1158,7 @@ html:not(.js) [data-reveal]{opacity:1;transform:none}
 }
 @media (max-width:520px){
   .film__frame{box-shadow:7px 7px 0 rgba(4,71,255,.9)}
-  .film__cta{width:60px;height:60px;margin:-30px 0 0 -30px}
+  .film__cta{width:60px;height:60px;right:12px;bottom:10px}
   .film__cta svg{width:20px;height:20px}
   .film__tag{left:10px;bottom:10px;font-size:8px}
   .film__title{font-size:clamp(1.9rem,8vw,2.6rem)}

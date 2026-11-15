@@ -22,8 +22,10 @@
     const intro = document.getElementById("intro");
     if (!intro) return;
 
-    // Internal navigation (page wipe) skips the intro once.
-    if (sessionStorage.getItem("rc-skip-intro")) {
+    // Internal navigation (page wipe) skips the intro once. `?nointro` or
+    // `#nointro` skips it too, so a direct link or a screenshot never has to
+    // wait for it.
+    if (sessionStorage.getItem("rc-skip-intro") || location.hash === "#nointro" || location.search.indexOf("nointro") !== -1) {
       sessionStorage.removeItem("rc-skip-intro");
       intro.remove();
       return;
@@ -462,23 +464,16 @@
     const section = document.getElementById("cities");
     if (!section) return;
     const track = section.querySelector(".cities__track-inner");
-    if (!track) return;
+    const trackBox = section.querySelector(".cities__track");
+    const pin = section.querySelector(".cities__pin");
+    if (!track || !trackBox || !pin) return;
     const mq = window.matchMedia("(min-width: 981px)");
 
-    const setup = () => section.classList.toggle("is-pinned", mq.matches);
-    if (mq.addEventListener) mq.addEventListener("change", setup);
-    setup();
-
     const paint = () => {
-      if (!section.classList.contains("is-pinned")) {
-        track.style.transform = "";
-        section.style.height = "";
-        return;
-      }
+      if (!section.classList.contains("is-pinned")) return;
       // How far the three posters have to travel to clear the viewport.
-      const dist = Math.max(0, track.scrollWidth - window.innerWidth + 96);
+      const dist = Math.max(0, track.scrollWidth - trackBox.clientWidth);
       // Pin for exactly as long as that travel needs, plus a little air.
-      // A fixed 340vh pin left the page scrolling through nothing.
       const want = Math.round(window.innerHeight + dist * 1.9 + 120);
       if (section.style.height !== want + "px") section.style.height = want + "px";
 
@@ -488,9 +483,62 @@
       track.style.transform = "translate3d(" + -(p * dist) + "px,0,0)";
     };
 
-    window.addEventListener("scroll", paint, { passive: true });
-    window.addEventListener("resize", paint);
-    paint();
+    // Decide between the pinned horizontal track and the plain three-up row.
+    // A pinned track only earns its scroll when the posters both fit the
+    // viewport height and still have room to travel.
+    const layout = () => {
+      section.classList.remove("is-pinned", "is-static");
+      section.style.height = "";
+      track.style.transform = "";
+      track.style.removeProperty("--poster-w");
+      if (!mq.matches) return;
+
+      section.classList.add("is-pinned");
+      const poster = track.querySelector(".poster");
+      const media = poster && poster.querySelector(".poster__media");
+      const bodyH = poster ? Math.max(120, poster.offsetHeight - (media ? media.offsetHeight : 0)) : 180;
+
+      const pinStyle = getComputedStyle(pin);
+      const head = section.querySelector(".sec-head");
+      const hint = section.querySelector(".cities__hint");
+      const note = section.querySelector(".city-note");
+      const margin = (el) => (el ? parseFloat(getComputedStyle(el).marginTop) || 0 : 0);
+      const chrome =
+        (head ? head.offsetHeight : 0) +
+        margin(section.querySelector(".cities__track")) +
+        (hint ? hint.offsetHeight + margin(hint) : 0) +
+        (note ? note.offsetHeight + margin(note) : 0);
+      const avail =
+        window.innerHeight -
+        (parseFloat(pinStyle.paddingTop) || 0) -
+        (parseFloat(pinStyle.paddingBottom) || 0) -
+        chrome;
+      const fitted = clamp(280, avail - bodyH, 700);
+      track.style.setProperty("--poster-w", Math.round(fitted) + "px");
+
+      const dist = Math.max(0, track.scrollWidth - trackBox.clientWidth);
+      if (dist < 240) {
+        section.classList.remove("is-pinned");
+        section.classList.add("is-static");
+        track.style.removeProperty("--poster-w");
+        return;
+      }
+      paint();
+    };
+
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        paint();
+      });
+    };
+
+    if (mq.addEventListener) mq.addEventListener("change", layout);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", layout);
+    layout();
   }
 
   /* ------------------------------------------------------ velocity ticker */
