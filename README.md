@@ -342,6 +342,41 @@ City talk submissions and speaker pitches are handled by a prefilled mailto to
 
 ---
 
+## Local verification (required before any push)
+
+Nothing is pushed until the local gate passes. One command:
+
+```bash
+python3 tools/verify.py            # verify the site next to this script
+python3 tools/verify.py --shots    # also capture local screenshots (slow)
+```
+
+It checks, against the files on disk:
+
+- every page: one `h1`, canonical and `og:url` pointing at `https://buildwithnoclue.dev/`
+- no dead internal links or missing `#anchors`
+- every referenced local asset exists (images, CSS, JS)
+- every `<img>` has an `alt` attribute, every `target="_blank"` has `rel="noopener"`
+- no banned words in the visible copy (Commudle, GoAvo, Hack-Nation, Mumbai, Register,
+  the old `hello@noclue.co`, “manifesto”, “Choose your city”, the old 1,477 figure)
+- no unfilled `[BRACKET]` placeholder is published
+- a real local HTTP pass: every page and asset served from disk returns 200
+- the jsdom runtime suite (`tools/runtime-check.js`) — DOM wiring, reveal coverage,
+  the film swap, no dead manifesto links
+
+Install the pre-push hook so the gate runs automatically:
+
+```bash
+git config core.hooksPath tools/hooks
+```
+
+`git push --no-verify` skips it if you really need to.
+
+The jsdom suite needs `jsdom` (`npm i jsdom`); `tools/verify.py` finds it in
+`node_modules`, in `tools/node_modules`, or in `~/node_modules`.
+
+---
+
 ## Accessibility & performance
 
 - Semantic landmarks, one `<h1>` per page, skip link, visible focus rings.

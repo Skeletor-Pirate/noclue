@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+# Pre-push gate: nothing leaves the repo until the local verification passes.
+#
+# Install once per clone:
+#   git config core.hooksPath tools/hooks
+#
+# Override for a one-off push with:  git push --no-verify
+
+ROOT=$(git rev-parse --show-toplevel)
+cd "$ROOT" || exit 1
+
+PY=$(command -v python3 || command -v python)
+if [ -z "$PY" ]; then
+  echo "pre-push: python not found, skipping the local verification gate"
+  exit 0
+fi
+
+echo "pre-push: running the local verification gate"
+if ! "$PY" tools/verify.py --dir "$ROOT"; then
+  echo ""
+  echo "pre-push: BLOCKED. The local verification failed, so this push was not sent."
+  echo "          Fix the problems above, or use 'git push --no-verify' if you know better."
+  exit 1
+fi
+
+echo "pre-push: local verification passed"
+exit 0
