@@ -130,17 +130,6 @@
       doc.classList.add("smooth-on");
 
       window.addEventListener(
-        "wheel",
-        (event) => {
-          if (event.ctrlKey) return;
-          event.preventDefault();
-          const unit = event.deltaMode === 1 ? 18 : event.deltaMode === 2 ? window.innerHeight : 1;
-          this.scrollTo(this.target + event.deltaY * unit);
-        },
-        { passive: false }
-      );
-
-      window.addEventListener(
         "scroll",
         () => {
           if (!this.running) this.target = window.scrollY;
@@ -277,7 +266,7 @@
 
     const ctx = canvas.getContext("2d");
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const cell = 26;
+    const cell = window.innerWidth > 1600 ? 34 : 26;
     let w = 0;
     let h = 0;
     let dots = [];
@@ -324,9 +313,12 @@
       }
     };
 
-    const loop = () => {
-      draw();
+    let last = 0;
+    const loop = (now) => {
       raf = requestAnimationFrame(loop);
+      if (now - last < 33) return;   // ~30fps is plenty for a dot field
+      last = now;
+      draw();
     };
 
     const start = () => {
@@ -480,12 +472,19 @@
     const paint = () => {
       if (!section.classList.contains("is-pinned")) {
         track.style.transform = "";
+        section.style.height = "";
         return;
       }
+      // How far the three posters have to travel to clear the viewport.
+      const dist = Math.max(0, track.scrollWidth - window.innerWidth + 96);
+      // Pin for exactly as long as that travel needs, plus a little air.
+      // A fixed 340vh pin left the page scrolling through nothing.
+      const want = Math.round(window.innerHeight + dist * 1.9 + 120);
+      if (section.style.height !== want + "px") section.style.height = want + "px";
+
       const rect = section.getBoundingClientRect();
       const total = section.offsetHeight - window.innerHeight;
       const p = clamp(-rect.top / Math.max(1, total), 0, 1);
-      const dist = Math.max(0, track.scrollWidth - window.innerWidth + 96);
       track.style.transform = "translate3d(" + -(p * dist) + "px,0,0)";
     };
 

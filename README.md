@@ -28,7 +28,6 @@ stdlib server that sets the correct MIME type for WOFF2 fonts. Plain
 | `index.html` | Campaign home: pixel title, city posters, premise, format, partners, quote, FAQ, city picker |
 | `programs.html` | The series in detail: Delhi / Bangalore / Pune briefs with external apply links |
 | `partners.html` | Partner wall, why partner, partnership formats, contact |
-| `manifesto.html` | The noClue beliefs and operating principles |
 | `apply.html` | City chooser; sends each city to its real registration page |
 
 Shared chrome (header, utility strip, mobile menu, footer) is duplicated per page on
@@ -166,7 +165,7 @@ Everything below is optional chrome — the page is fully readable with JS off.
 |---|---|
 | Intro loader | Home page only. Inverted pixel title assembles on ink, progress bar, "Enter the series". Skips on internal navigation |
 | Page wipe | Internal links trigger a 16-column pixel wipe (blue/ink) before navigating |
-| Smooth scroll | Desktop fine pointers only: lerped scrolling, keyboard support, anchor easing |
+| Anchor easing | Anchor links ease to their target; the wheel itself is left to the browser, which scrolls far faster and smoother than a lerped loop |
 | Pixel scrollbar | Custom 4px blue scrollbar on the right, draggable, replaces the native bar |
 | Canvas pixel field | Sparse dot grid that reacts to the pointer in electric blue and drifts with scroll |
 | Masked reveals | Headings split into words and rise out of per-word masks on scroll |
@@ -181,7 +180,7 @@ Everything below is optional chrome — the page is fully readable with JS off.
 | Back to top | Pixel button that appears past the first viewport |
 | Sound | Optional WebAudio blips on hover/click, off by default, toggle in the footer |
 
-`prefers-reduced-motion` disables the intro, wipes, canvas field, smooth scroll, and all
+`prefers-reduced-motion` disables the intro, wipes, canvas field, anchor easing and all
 reveals. Touch devices keep native scrolling and the native cursor.
 
 ---
@@ -192,7 +191,6 @@ reveals. Touch devices keep native scrolling and the native cursor.
 noclue-site/
 ├── index.html
 ├── programs.html
-├── manifesto.html
 ├── partners.html
 ├── apply.html
 ├── serve.py
@@ -318,6 +316,29 @@ City talk submissions and speaker pitches are handled by a prefilled mailto to
 - Delhi is positioned around enterprise/commercial adoption, not policy.
 - Hacker House is not presented as live or dated.
 - Solution Lab and Ventures are not presented as live offerings.
+
+---
+
+## Performance
+
+- The wheel is never hijacked: native scrolling is the fastest, smoothest option on a
+  laptop. Only anchor links are eased.
+- The sticky header is a flat colour — no `backdrop-filter`, which is expensive to
+  repaint on every scroll frame.
+- The canvas pixel field draws at ~30 fps (not 60) and uses a coarser grid on screens
+  wider than 1600 px.
+- The pinned city track is sized in JS to the distance the three posters actually have
+  to travel, so there is no long stretch of scrolling with nothing happening.
+- All imagery is pre-sized (`width`/`height` on every `<img>`), fonts are self-hosted and
+  subset, and there are no third-party requests except the YouTube player, which only
+  loads if the visitor presses play.
+
+### Recent changes
+
+- The manifesto page was removed; its numbers live in the home page track record.
+- The series page opens with an "At a glance" grid of the three rooms.
+- The hero no longer repeats "Choose your city"; the top strip and the marquee no longer
+  carry blue separator squares.
 
 ---
 

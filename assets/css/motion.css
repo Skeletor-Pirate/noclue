@@ -209,7 +209,7 @@ html:not(.js) .intro{display:none}
 }
 
 @media (min-width:981px){
-  .cities.is-pinned{height:340vh}
+  .cities.is-pinned{height:200vh}   /* JS sets the exact length */
   .cities.is-pinned .cities__pin{
     position:sticky;top:0;height:100svh;min-height:640px;
     display:flex;flex-direction:column;justify-content:center;
@@ -218,7 +218,7 @@ html:not(.js) .intro{display:none}
   .cities.is-pinned .h2{font-size:clamp(2.1rem,3.3vw,3.4rem)}
   .cities.is-pinned .sec-head{margin-bottom:0}
   .cities.is-pinned .cities__track{margin-top:clamp(20px,2.4vw,32px)}
-  .cities.is-pinned .cities__track-inner .poster{flex-basis:min(340px,24vw)}
+  .cities.is-pinned .cities__track-inner .poster{flex-basis:clamp(320px,40vw,700px)}
   .cities.is-pinned .cities__hint{display:flex}
   .cities.is-pinned .city-note{margin-top:18px}
 }

@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const SITE = "/data/data/com.termux/files/home/noclue-site";
-const pages = ["index.html", "programs.html", "partners.html", "manifesto.html", "apply.html"];
+const pages = ["index.html", "programs.html", "partners.html", "apply.html"];
 const siteJs = fs.readFileSync(path.join(SITE, "assets/js/site.js"), "utf8");
 const motionJs = fs.readFileSync(path.join(SITE, "assets/js/motion.js"), "utf8");
 let failures = 0;
@@ -151,6 +151,12 @@ for (const page of pages) {
     if (!src || /^https?:/.test(src)) return;
     if (!fs.existsSync(path.join(SITE, src))) fail("missing image file " + src);
     if (!img.hasAttribute("alt")) fail("img without alt attribute: " + src);
+  });
+
+  // The manifesto page is gone: nothing may link to it any more.
+  Array.from(doc.querySelectorAll("a[href]")).forEach((a) => {
+    const href = a.getAttribute("href") || "";
+    if (href.includes("manifesto")) fail("dead link to the removed manifesto page: " + href);
   });
 
   const year = doc.querySelector("[data-year]");

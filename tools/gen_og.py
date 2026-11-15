@@ -97,13 +97,6 @@ build(
     "og-partners.jpg",
 )
 build(
-    "manifesto",
-    "Manifesto",
-    "NO INVENTED PROOF",
-    [("BELIEF", "Real problems, real rooms"), ("METHOD", "Show the work")],
-    "og-manifesto.jpg",
-)
-build(
     "apply",
     "Apply",
     "APPLICATIONS OPEN",
