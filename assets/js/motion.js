@@ -1,7 +1,7 @@
 /* ==========================================================================
    noClue — Reality Check
    Motion layer: intro, page wipes, smooth scroll, pixel scrollbar, canvas
-   field, masked reveals, pinned horizontal track, velocity ticker, sound.
+   field, masked reveals, pinned horizontal track, velocity ticker, copy link.
    ========================================================================== */
 
 (() => {
@@ -633,56 +633,54 @@
     });
   }
 
-  /* -------------------------------------------------------------- sound */
-  function initSound() {
-    const toggle = document.getElementById("soundToggle");
-    if (!toggle) return;
-    const label = toggle.querySelector("span");
-    let ctx = null;
-    let on = localStorage.getItem("rc-sound") === "on";
+  /* ----------------------------------------------------------- copy link */
+  function initCopy() {
+    const button = document.getElementById("copyLink");
+    if (!button) return;
+    const label = button.querySelector("span");
+    const status = document.getElementById("copyStatus");
+    const canonical = document.querySelector('link[rel="canonical"]');
+    const url = canonical ? canonical.href : window.location.href;
+    let timer = 0;
 
-    const paint = () => {
-      toggle.classList.toggle("is-on", on);
-      toggle.setAttribute("aria-pressed", String(on));
-      if (label) label.textContent = on ? "Sound on" : "Sound off";
+    const done = () => {
+      button.classList.add("is-done");
+      if (label) label.textContent = "Link copied";
+      if (status) status.textContent = "Link copied to the clipboard.";
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        button.classList.remove("is-done");
+        if (label) label.textContent = "Copy link";
+        if (status) status.textContent = "";
+      }, 2400);
     };
 
-    const blip = (freq, duration, gain) => {
-      if (!on) return;
+    // Older browsers and plain http fall back to a hidden field and execCommand.
+    const fallback = () => {
+      const field = document.createElement("textarea");
+      field.value = url;
+      field.setAttribute("readonly", "");
+      field.style.position = "fixed";
+      field.style.top = "-1000px";
+      field.style.opacity = "0";
+      document.body.appendChild(field);
+      field.select();
       try {
-        ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const amp = ctx.createGain();
-        osc.type = "square";
-        osc.frequency.value = freq;
-        amp.gain.setValueAtTime(gain, ctx.currentTime);
-        amp.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-        osc.connect(amp).connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + duration);
+        document.execCommand("copy");
+        done();
       } catch (error) {
-        /* audio unavailable */
+        /* clipboard blocked */
       }
+      field.parentNode.removeChild(field);
     };
 
-    toggle.addEventListener("click", () => {
-      on = !on;
-      localStorage.setItem("rc-sound", on ? "on" : "off");
-      paint();
-      if (on) blip(880, 0.08, 0.05);
+    button.addEventListener("click", () => {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url).then(done, fallback);
+      } else {
+        fallback();
+      }
     });
-
-    document.addEventListener("pointerover", (event) => {
-      if (!on) return;
-      if (event.target.closest(".btn, .poster, .partner-logo, .nav a, .apply-row")) blip(920, 0.035, 0.02);
-    });
-
-    document.addEventListener("click", (event) => {
-      if (!on) return;
-      if (event.target.closest(".btn, .poster, .apply-row, .finale__city")) blip(520, 0.06, 0.035);
-    });
-
-    paint();
   }
 
   /* -------------------------------------------------------- hero glitch */
@@ -704,7 +702,7 @@
     initCounters();
     initHero();
     initToTop();
-    initSound();
+    initCopy();
     initWipe();
     initIntro();
     smooth.init();

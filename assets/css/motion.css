@@ -286,17 +286,19 @@ html:not(.js) .intro{display:none}
 .menu.is-open .menu__foot{opacity:1;transform:none}
 
 /* --------------------------------------------------------------------------
-   Sound toggle
+   Copy link
    -------------------------------------------------------------------------- */
-.sound{
+.copy{
   appearance:none;border:1px solid var(--line-mid);background:transparent;color:var(--ink);
   font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;
   padding:7px 10px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+  transition:border-color .2s,color .2s;
 }
-.sound i{width:6px;height:6px;background:var(--muted);display:block;transition:background .2s}
-.sound.is-on{border-color:var(--blue);color:var(--blue)}
-.sound.is-on i{background:var(--blue);animation:sound-pulse 1.4s ease-in-out infinite}
-@keyframes sound-pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.copy i{width:6px;height:6px;border:1px solid var(--muted);display:block;transition:background .2s,border-color .2s}
+.copy:hover,.copy:focus-visible{border-color:var(--ink)}
+.copy.is-done{border-color:var(--blue);color:var(--blue)}
+.copy.is-done i{background:var(--blue);border-color:var(--blue);animation:copy-pulse 1.4s ease-in-out infinite}
+@keyframes copy-pulse{0%,100%{opacity:1}50%{opacity:.25}}
 
 /* --------------------------------------------------------------------------
    Reveal stagger

@@ -61,7 +61,8 @@ for (const page of pages) {
   if (!doc.getElementById("pxfield")) fail("missing canvas field");
   if (!doc.getElementById("scrollbar")) fail("missing pixel scrollbar");
   if (!doc.getElementById("toTop")) fail("missing back-to-top");
-  if (!doc.getElementById("soundToggle")) fail("missing sound toggle");
+  if (!doc.getElementById("copyLink")) fail("missing copy link");
+  if (doc.getElementById("soundToggle")) fail("sound toggle should be gone");
   if (!doc.querySelector(".cursor .cursor__label")) fail("cursor has no label element");
   if (hadTicker && !doc.querySelector(".ticker__shift .ticker__track")) fail("ticker not wrapped in .ticker__shift");
 
