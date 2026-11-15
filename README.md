@@ -246,21 +246,36 @@ The site is static. On Vercel, use:
 
 ### Go-live checklist
 
-- **Live domain: `buildwithnoclue.dev`** (DNS at name.com). Both `buildwithnoclue.dev`
-  and `www.buildwithnoclue.dev` are attached to the Vercel project `noclue`.
-- Add these records at name.com:
+- **Live domain: `buildwithnoclue.dev`** (DNS at name.com), serving the Vercel project
+  `noclue_reality_check` in the *abhinav-nautiyal* account. Both `buildwithnoclue.dev`
+  and `www.buildwithnoclue.dev` are attached and verified.
+- The records in place at name.com:
 
-  | Type | Host | Answer | TTL |
-  |---|---|---|---|
-  | A | *(blank = apex)* | `76.76.21.21` | 300 |
-  | CNAME | `www` | `cname.vercel-dns.com` | 300 |
+  | Type | Host | Answer |
+  |---|---|---|
+  | A | *(blank = apex)* | `216.198.79.1` (Vercel) |
+  | CNAME | `www` | `678ab0debf46cef4.vercel-dns-017.com` (Vercel) |
 
 - `.dev` is on the HSTS preload list, so the domain only serves over https.
-- Vercel Authentication (SSO) protection is set to *all except custom domains*, so
-  `buildwithnoclue.dev` is public while the auto-generated `*.vercel.app` alias still
-  asks for a login. `https://noclue-five.vercel.app` is also public and safe to share.
-- The project auto-deploys `main` of `Skeletor-Pirate/noclue`; the same history is
-  mirrored to `abhinav-nautiyal/noClue-Reality-Check`.
+- Vercel Authentication (SSO) protection is set to *all except custom domains*, so the
+  custom domains are public while the auto-generated `*.vercel.app` alias asks for a login.
+- **Source of truth:** `https://github.com/abhinav-nautiyal/noClue-Reality-Check`
+  (public), mirrored to `Skeletor-Pirate/noclue`. Every push runs the local
+  verification gate first.
+- **Deploying to the abhinav-nautiyal account:** the Vercel CLI needs a commit author
+  who is a team member, otherwise the deployment is blocked:
+
+  ```bash
+  git config user.name "abhinav-nautiyal"
+  git config user.email "111695234+abhinav-nautiyal@users.noreply.github.com"
+  vercel link --project noclue_reality_check --scope abhinavs-projects-392dd419
+  vercel deploy --prod --yes --token "$VERCEL_TOKEN"
+  ```
+
+- That project still watches the GitHub repo `abhinav-nautiyal/noclue_reality_check`.
+  To make plain pushes deploy on their own, install the Vercel GitHub App on
+  `noClue-Reality-Check`:
+  `https://github.com/apps/vercel/installations/new?target_repo=abhinav-nautiyal/noClue-Reality-Check`
 
 ---
 
